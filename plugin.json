@@ -1,0 +1,17 @@
+{
+  "description": {
+    "en": "Taxonomy",
+    "ru": "Taxonomy",
+    "uk": "Taxonomy"
+  },
+  "url": "https://github.com/pytsite/plugin-taxonomy",
+  "author": {
+    "name": "Alexander Shepetko",
+    "email": "a@shepetko.com",
+    "url": "https://shepetko.com"
+  },
+  "requires": {
+    "packages": [],
+    "plugins": []
+  }
+}
