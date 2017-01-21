@@ -69,7 +69,7 @@ class TokensInput(_widget.input.Tokens):
 
         super().set_val(clean_value)
 
-    def get_html_em(self, **kwargs) -> _html.Element:
+    def _get_element(self, **kwargs) -> _html.Element:
         """Render the widget.
         :param **kwargs:
         """
@@ -81,7 +81,7 @@ class TokensInput(_widget.input.Tokens):
             cls=' '.join(('form-control', self._css)),
         )
 
-        return self._group_wrap(html_input)
+        return html_input
 
 
 class Cloud(_widget.Abstract):
@@ -105,7 +105,6 @@ class Cloud(_widget.Abstract):
         self._term_title_pattern = kwargs.get('term_title_pattern', '%s')
         self._term_css = kwargs.get('term_css', 'label label-default')
         self._title_tag = kwargs.get('title_tag', 'h3')
-        self._wrap = kwargs.get('wrap', True)
 
         self._css += ' widget-taxonomy-cloud widget-taxonomy-cloud-{}'.format(self._model)
 
@@ -139,16 +138,8 @@ class Cloud(_widget.Abstract):
     def terms(self) -> list:
         return list(_api.find(self._model).get(self._num))
 
-    @property
-    def wrap(self) -> bool:
-        return self._wrap
-
-    def get_html_em(self, **kwargs) -> _html.Element:
+    def _get_element(self, **kwargs) -> _html.Element:
         """Render the widget.
         :param **kwargs:
         """
-        content = _html.TagLessElement(_tpl.render(self._tpl, {'widget': self}))
-        if self._wrap:
-            content = self._group_wrap(content)
-
-        return content
+        return _html.TagLessElement(_tpl.render(self._tpl, {'widget': self}))
