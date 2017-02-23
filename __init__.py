@@ -22,7 +22,7 @@ def __init():
     assetman.register_package(__name__, alias='taxonomy')
 
     # Search term route
-    router.add_rule('/taxonomy/search/<model>/<query>', 'plugins.taxonomy@search_terms')
+    router.add_rule('/taxonomy/search/<model>/<query>', 'plugins.taxonomy@search_terms', 'taxonomy@search_terms')
 
     # Admin sidebar menu
     admin.sidebar.add_section('taxonomy', __name__ + '@taxonomy', 500)
