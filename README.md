@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 0.2 (2017-03-11)
+Added support for terms without links in `widget.Cloud`. 
+
+
 ### 0.1.3 (2017-03-03)
 Support for latest PytSite router's API function rename.
 
