@@ -74,10 +74,10 @@ class Term(_odm_ui.model.UIEntity):
                 # Sanitize CHANGED alias for EXISTING term
                 term = _api.find(self.model).eq('alias', value).first()
                 if not term or term != self:
-                    value = _api.sanitize_alias_string(self.model, value)
+                    value = _api.sanitize_alias(self.model, value, self.language)
             else:
                 # Sanitize alias for NEW term
-                value = _api.sanitize_alias_string(self.model, value)
+                value = _api.sanitize_alias(self.model, value, self.language)
 
         elif field_name == 'language':
             # Check if language code is correct

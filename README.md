@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 0.2.1 (2017-03-18)
+Fixed multilingual terms aliases sanitizing.
+
+
 ### 0.2 (2017-03-11)
 Added support for terms without links in `widget.Cloud`. 
 

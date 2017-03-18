@@ -100,18 +100,14 @@ def dispense(model: str, title: str, alias: str = None, language: str = None) ->
     return term
 
 
-def build_alias_str(s: str) -> str:
-    return _util.transform_str_2(s)
-
-
-def sanitize_alias_string(model: str, s: str) -> str:
-    """Sanitize a path string.
+def sanitize_alias(model: str, s: str, language: str = None) -> str:
+    """Sanitize an alias string.
     """
-    s = build_alias_str(s)
+    s = _util.transform_str_2(s)
 
     itr = 0
     while True:
-        if not find(model).eq('alias', s).count():
+        if not find(model, language).eq('alias', s).count():
             return s
 
         itr += 1
