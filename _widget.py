@@ -78,7 +78,7 @@ class TokensInput(_widget.input.Tokens):
             uid=self._uid,
             name=self._name,
             value=','.join([v.f_get('title') for v in self.get_val()]),
-            cls=' '.join(('form-control', self._css)),
+            css=' '.join(('form-control', self._css)),
         )
 
         return html_input

@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 0.2.2 (2017-03-21)
+Support latest PytSite `widget`'s changes.
+
+
 ### 0.2.1 (2017-03-18)
 Fixed multilingual terms aliases sanitizing.
 
