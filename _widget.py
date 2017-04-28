@@ -47,8 +47,6 @@ class TokensInput(_widget.input.Tokens):
             'remote_source': self._remote_source,
         })
 
-        self._assets.append('taxonomy@js/widget/tokens-input.js')
-
     def set_val(self, value, **kwargs):
         """Set value of the widget.
         """
@@ -105,10 +103,8 @@ class Cloud(_widget.Abstract):
         self._term_title_pattern = kwargs.get('term_title_pattern', '%s')
         self._term_css = kwargs.get('term_css', 'label label-default')
         self._title_tag = kwargs.get('title_tag', 'h3')
-
         self._css += ' widget-taxonomy-cloud widget-taxonomy-cloud-{}'.format(self._model)
-
-        self._assets.append('taxonomy@css/taxonomy.css')
+        self._js_module = 'taxonomy-widget-cloud'
 
     @property
     def model(self) -> str:

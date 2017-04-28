@@ -18,7 +18,11 @@ def __init():
     # Resources
     lang.register_package(__name__, alias='taxonomy')
     tpl.register_package(__name__, alias='taxonomy')
+
     assetman.register_package(__name__, alias='taxonomy')
+    assetman.js_module('taxonomy-widget-cloud', __name__ + '@js/taxonomy-widget-cloud')
+    assetman.t_less(__name__ + '@css/**', 'css')
+    assetman.t_js(__name__ + '@js/**', 'js')
 
     # Search term route
     router.handle('/taxonomy/search/<model>/<query>', 'plugins.taxonomy@search_terms', 'taxonomy@search_terms')
