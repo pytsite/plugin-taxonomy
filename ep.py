@@ -1,6 +1,6 @@
 """Taxonomy Endpoints
 """
-from pytsite import http as _http
+from pytsite import http as _http, router as _router
 from . import _api
 
 __author__ = 'Alexander Shepetko'
@@ -8,12 +8,10 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 
-def search_terms(args: dict, inp: dict) -> _http.response.JSON:
+def search_terms(model: str, query: str) -> _http.response.JSON:
     """Search taxonomy term titles
     """
-    model = args.get('model')
-    query = args.get('query')
-    exclude = inp.get('exclude', [])
+    exclude = _router.request().inp.get('exclude', [])
 
     if isinstance(exclude, str):
         exclude = [exclude]
