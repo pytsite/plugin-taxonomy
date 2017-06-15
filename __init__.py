@@ -9,8 +9,9 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 
-def __init():
+def _init():
     from pytsite import assetman, tpl, lang, router, admin, permissions
+    from . import _controllers
 
     # Permissions
     permissions.define_group('taxonomy', 'taxonomy@taxonomy')
@@ -25,10 +26,10 @@ def __init():
     assetman.t_js(__name__ + '@js/**', 'js')
 
     # Search term route
-    router.handle('/taxonomy/search/<model>/<query>', 'plugins.taxonomy@search_terms', 'taxonomy@search_terms')
+    router.handle(_controllers.SearchTerms(), '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
 
     # Admin sidebar menu
     admin.sidebar.add_section('taxonomy', __name__ + '@taxonomy', 500)
 
 
-__init()
+_init()

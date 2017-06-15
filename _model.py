@@ -34,7 +34,7 @@ class Term(_odm_ui.model.UIEntity):
         return 'taxonomy'
 
     @classmethod
-    def odm_auth_permissions(cls) -> _Tuple[str]:
+    def odm_auth_permissions(cls) -> _Tuple[str, ...]:
         return 'create', 'modify', 'delete'
 
     @property
