@@ -1,4 +1,6 @@
 {
+  "name": "plugins.taxonomy",
+  "version": "0.3.3",
   "description": {
     "en": "Taxonomy",
     "ru": "Taxonomy",
