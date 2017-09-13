@@ -62,8 +62,7 @@ class TokensInput(_widget.input.Tokens):
                 clean_value.append(v)
             elif isinstance(v, str) and v:
                 term = _api.dispense(self._model, v)
-                with term:
-                    clean_value.append(term.save())
+                clean_value.append(term.save())
 
         super().set_val(clean_value)
 

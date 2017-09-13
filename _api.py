@@ -19,7 +19,7 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
         raise RuntimeError("Model '{}' is already registered as taxonomy model.".format(model))
 
     if isinstance(cls, str):
-        cls = _util.get_class(cls)
+        cls = _util.get_module_attr(cls)
 
     if not issubclass(cls, _Term):
         raise TypeError('Subclass of AbstractTerm expected.')
