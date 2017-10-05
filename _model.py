@@ -1,4 +1,4 @@
-"""Taxonomy Models.
+"""PytSite Taxonomy Plugin Models
 """
 from typing import Tuple as _Tuple
 from pytsite import odm_ui as _odm_ui, lang as _lang, odm as _odm, widget as _widget, form as _form, events as _events
@@ -9,11 +9,11 @@ __license__ = 'MIT'
 
 
 class Term(_odm_ui.model.UIEntity):
-    """Taxonomy Term Base Model.
+    """Taxonomy Term Model
     """
 
     def _setup_fields(self):
-        """Hook.
+        """Hook
         """
         self.define_field(_odm.field.String('title', required=True, strip_html=True))
         self.define_field(_odm.field.String('alias', required=True, strip_html=True))
@@ -22,7 +22,7 @@ class Term(_odm_ui.model.UIEntity):
         self.define_field(_odm.field.Integer('order'))
 
     def _setup_indexes(self):
-        """Hook.
+        """Hook
         """
         self.define_index([('alias', _odm.I_ASC), ('language', _odm.I_ASC)], unique=True)
         self.define_index([('language', _odm.I_ASC), ('weight', _odm.I_DESC)])
@@ -58,7 +58,7 @@ class Term(_odm_ui.model.UIEntity):
         return self.f_get('order')
 
     def _on_f_set(self, field_name: str, value, **kwargs):
-        """Hook.
+        """Hook
         """
         if field_name == 'alias':
             from . import _api
@@ -87,7 +87,7 @@ class Term(_odm_ui.model.UIEntity):
         return super()._on_f_set(field_name, value, **kwargs)
 
     def _pre_save(self, **kwargs):
-        """Hook.
+        """Hook
         """
         super()._pre_save(**kwargs)
 
@@ -98,13 +98,15 @@ class Term(_odm_ui.model.UIEntity):
         _events.fire('taxonomy.term.pre_save', term=self)
 
     def _pre_delete(self, **kwargs):
+        """Hook
+        """
         super()._pre_delete(**kwargs)
 
         _events.fire('taxonomy.term.pre_delete', term=self)
 
     @classmethod
     def odm_ui_browser_setup(cls, browser: _odm_ui.Browser):
-        """Hook.
+        """Hook
         """
         data_fields = [
             ('title', 'taxonomy@title'),
@@ -119,12 +121,12 @@ class Term(_odm_ui.model.UIEntity):
         browser.finder_adjust = lambda finder: finder.eq('language', _lang.get_current())
 
     def odm_ui_browser_row(self) -> tuple:
-        """Hook.
+        """Hook
         """
         return self.title, self.alias, self.weight, self.order
 
     def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
-        """Hook.
+        """Hook
         """
         frm.add_widget(_widget.input.Text(
             weight=10,
@@ -169,6 +171,6 @@ class Term(_odm_ui.model.UIEntity):
         ))
 
     def odm_ui_mass_action_entity_description(self) -> str:
-        """Hook.
+        """Hook
         """
         return self.title

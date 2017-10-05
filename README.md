@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 1.1 (2017-10-05)
+Default sort field of `widget.TermSelect` set to 'order'.
+
+
 ### 1.0.1 (2017-09-18)
 `plugin.json` fixed.
 

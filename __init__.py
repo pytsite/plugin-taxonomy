@@ -1,4 +1,4 @@
-"""PytSite Taxonomy Plugin.
+"""PytSite Taxonomy Plugin
 """
 # Public API
 from . import _api, _model as model, _widget as widget
@@ -16,10 +16,13 @@ def _init():
     # Permissions
     permissions.define_group('taxonomy', 'taxonomy@taxonomy')
 
-    # Resources
+    # Language resources
     lang.register_package(__name__, alias='taxonomy')
+
+    # Tpl resources
     tpl.register_package(__name__, alias='taxonomy')
 
+    # Assetman resources
     assetman.register_package(__name__, alias='taxonomy')
     assetman.js_module('taxonomy-widget-cloud', __name__ + '@js/taxonomy-widget-cloud')
     assetman.t_less(__name__ + '@css/**', 'css')

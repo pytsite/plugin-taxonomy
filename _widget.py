@@ -1,4 +1,4 @@
-"""Tag Widgets.
+"""PytSite Taxonomy Plugin Widgets
 """
 from pytsite import widget as _widget, html as _html, odm as _odm, router as _router, tpl as _tpl, odm_ui as _odm_ui, \
     lang as _lang
@@ -10,8 +10,14 @@ __license__ = 'MIT'
 
 
 class TermSelect(_odm_ui.widget.EntitySelect):
+    """Term Select
+    """
+
     def __init__(self, uid: str, **kwargs):
+        kwargs.setdefault('sort_field', 'order')
+
         super().__init__(uid, **kwargs)
+
         self._language = kwargs.get('language', _lang.get_current())
 
     def _get_finder(self):
@@ -22,7 +28,7 @@ class TermSelect(_odm_ui.widget.EntitySelect):
 
 
 class TokensInput(_widget.input.Tokens):
-    """Term Tokens Input Widget.
+    """Term Tokens Input Widget
     """
 
     def __init__(self, uid: str, **kwargs):
@@ -48,7 +54,7 @@ class TokensInput(_widget.input.Tokens):
         })
 
     def set_val(self, value, **kwargs):
-        """Set value of the widget.
+        """Set value of the widget
         """
         if value is None:
             return super().set_val(value, **kwargs)
@@ -67,8 +73,7 @@ class TokensInput(_widget.input.Tokens):
         super().set_val(clean_value)
 
     def _get_element(self, **kwargs) -> _html.Element:
-        """Render the widget.
-        :param **kwargs:
+        """Render the widget
         """
         html_input = _html.Input(
             type='text',
@@ -82,11 +87,11 @@ class TokensInput(_widget.input.Tokens):
 
 
 class Cloud(_widget.Abstract):
-    """Tags Cloud Widget.
+    """Terms Cloud Widget
     """
 
     def __init__(self, uid: str, **kwargs):
-        """Init.
+        """Init
         """
         super().__init__(uid, **kwargs)
 
