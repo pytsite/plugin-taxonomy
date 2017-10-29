@@ -206,3 +206,21 @@ class Term(_odm_ui.model.UIEntity):
         """Hook
         """
         return self.title
+
+    def as_jsonable(self) -> dict:
+        r = super().as_jsonable()
+
+        if self.has_field('title'):
+            r['title'] = self.title
+        if self.has_field('alias'):
+            r['alias'] = self.alias
+        if self.has_field('weight'):
+            r['weight'] = self.weight
+        if self.has_field('order'):
+            r['order'] = self.order
+        if self.has_field('language'):
+            r['language'] = self.language
+        if self.has_field('image'):
+            r['image'] = self.image.as_jsonable()
+
+        return r

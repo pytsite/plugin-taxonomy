@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 1.3 (2017-10-29)
+Added fields to `as_jsonable()`'s return value.
+
+
 ### 1.2.1 (2017-10-29)
 Fixed images deletion.
 
