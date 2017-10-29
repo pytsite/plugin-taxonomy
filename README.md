@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 1.2.1 (2017-10-29)
+Fixed images deletion.
+
+
 ### 1.2 (2017-10-29)
 Added new field `image` to `model.Term`.
 

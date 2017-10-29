@@ -110,6 +110,13 @@ class Term(_odm_ui.model.UIEntity):
 
         _events.fire('taxonomy.term.pre_delete', term=self)
 
+    def _after_delete(self, **kwargs):
+        """Hook
+        """
+        # Delete attached image
+        if self.has_field('image') and self.image:
+            self.image.delete()
+
     @classmethod
     def odm_ui_browser_setup(cls, browser: _odm_ui.Browser):
         """Hook
