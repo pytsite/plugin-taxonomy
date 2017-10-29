@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 1.2 (2017-10-29)
+Added new field `image` to `model.Term`.
+
+
 ### 1.1 (2017-10-05)
 Default sort field of `widget.TermSelect` set to 'order'.
 

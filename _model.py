@@ -1,7 +1,8 @@
 """PytSite Taxonomy Plugin Models
 """
 from typing import Tuple as _Tuple
-from pytsite import odm_ui as _odm_ui, lang as _lang, odm as _odm, widget as _widget, form as _form, events as _events
+from pytsite import odm_ui as _odm_ui, lang as _lang, odm as _odm, widget as _widget, form as _form, \
+    events as _events, file as _file, file_storage_odm as _file_storage_odm
 
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
@@ -20,6 +21,7 @@ class Term(_odm_ui.model.UIEntity):
         self.define_field(_odm.field.String('language', required=True, default=_lang.get_current()))
         self.define_field(_odm.field.Integer('weight'))
         self.define_field(_odm.field.Integer('order'))
+        self.define_field(_file_storage_odm.field.Image('image'))
 
     def _setup_indexes(self):
         """Hook
@@ -56,6 +58,10 @@ class Term(_odm_ui.model.UIEntity):
     @property
     def order(self) -> int:
         return self.f_get('order')
+
+    @property
+    def image(self) -> _file.model.AbstractImage:
+        return self.f_get('image')
 
     def _on_f_set(self, field_name: str, value, **kwargs):
         """Hook
@@ -128,47 +134,66 @@ class Term(_odm_ui.model.UIEntity):
     def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
         """Hook
         """
-        frm.add_widget(_widget.input.Text(
-            weight=10,
-            uid='title',
-            label=self.t('title'),
-            value=self.f_get('title'),
-            required=True,
-        ))
+        # Title
+        if self.has_field('title'):
+            frm.add_widget(_widget.input.Text(
+                weight=10,
+                uid='title',
+                label=_lang.t('taxonomy@title'),
+                value=self.title,
+                required=self.get_field('title').required,
+            ))
 
-        frm.add_widget(_widget.input.Text(
-            weight=20,
-            uid='alias',
-            label=self.t('alias'),
-            value=self.f_get('alias'),
-        ))
+        # Alias
+        if self.has_field('alias'):
+            frm.add_widget(_widget.input.Text(
+                weight=20,
+                uid='alias',
+                label=_lang.t('taxonomy@alias'),
+                value=self.f_get('alias'),
+            ))
 
-        frm.add_widget(_widget.input.Integer(
-            weight=30,
-            uid='weight',
-            label=self.t('weight'),
-            value=self.f_get('weight'),
-            h_size='col-sm-3 col-md-2 col-lg-1'
-        ))
+        # Weight
+        if self.has_field('weight'):
+            frm.add_widget(_widget.input.Integer(
+                weight=30,
+                uid='weight',
+                label=_lang.t('taxonomy@weight'),
+                value=self.weight,
+                h_size='col-sm-3 col-md-2 col-lg-1'
+            ))
 
-        frm.add_widget(_widget.input.Integer(
-            weight=40,
-            uid='order',
-            label=self.t('order'),
-            value=self.f_get('order'),
-            h_size='col-sm-3 col-md-2 col-lg-1',
-            allow_minus=True
-        ))
+        # Order
+        if self.has_field('order'):
+            frm.add_widget(_widget.input.Integer(
+                weight=40,
+                uid='order',
+                label=_lang.t('taxonomy@order'),
+                value=self.order,
+                h_size='col-sm-3 col-md-2 col-lg-1',
+                allow_minus=True
+            ))
+
+        # Image
+        if self.has_field('image'):
+            frm.add_widget(_file.widget.ImagesUpload(
+                uid='image',
+                weight=50,
+                label=_lang.t('taxonomy@image'),
+                required=self.get_field('image').required,
+                value=self.image,
+            ))
 
         # Language
-        lng = _lang.get_current() if self.is_new else self.language
-        frm.add_widget(_widget.static.Text(
-            uid='language',
-            weight=50,
-            label=self.t('language'),
-            title=_lang.lang_title(lng),
-            value=lng,
-        ))
+        if self.has_field('language'):
+            lng = _lang.get_current() if self.is_new else self.language
+            frm.add_widget(_widget.static.Text(
+                uid='language',
+                weight=60,
+                label=_lang.t('taxonomy@language'),
+                title=_lang.lang_title(lng),
+                value=lng,
+            ))
 
     def odm_ui_mass_action_entity_description(self) -> str:
         """Hook
