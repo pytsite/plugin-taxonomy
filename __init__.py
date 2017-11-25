@@ -10,20 +10,21 @@ __license__ = 'MIT'
 
 
 def _init():
-    from pytsite import assetman, tpl, lang, router, admin, permissions
+    from pytsite import tpl, lang, router
+    from plugins import assetman, permissions, admin
     from . import _controllers
 
     # Permissions
     permissions.define_group('taxonomy', 'taxonomy@taxonomy')
 
     # Language resources
-    lang.register_package(__name__, alias='taxonomy')
+    lang.register_package(__name__)
 
     # Tpl resources
-    tpl.register_package(__name__, alias='taxonomy')
+    tpl.register_package(__name__)
 
     # Assetman resources
-    assetman.register_package(__name__, alias='taxonomy')
+    assetman.register_package(__name__)
     assetman.js_module('taxonomy-widget-cloud', __name__ + '@js/taxonomy-widget-cloud')
     assetman.t_less(__name__ + '@css/**', 'css')
     assetman.t_js(__name__ + '@js/**', 'js')

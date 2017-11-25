@@ -1,7 +1,7 @@
 """PytSite Taxonomy Plugin Widgets
 """
-from pytsite import widget as _widget, html as _html, odm as _odm, router as _router, tpl as _tpl, odm_ui as _odm_ui, \
-    lang as _lang
+from pytsite import html as _html, router as _router, tpl as _tpl, lang as _lang
+from plugins import widget as _widget, odm as _odm, odm_ui as _odm_ui
 from . import _api
 
 __author__ = 'Alexander Shepetko'

@@ -1,7 +1,8 @@
 """PytSite Taxonomy API Functions.
 """
 import re
-from pytsite import admin as _admin, router as _router, lang as _lang, util as _util, odm as _odm
+from pytsite import router as _router, lang as _lang, util as _util
+from plugins import admin as _admin, odm as _odm
 from ._model import Term as _Term
 
 __author__ = 'Alexander Shepetko'
@@ -27,13 +28,13 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
     _odm.register_model(model, cls)
     _models.append(model)
 
-    menu_url = _router.rule_path('pytsite.odm_ui@browse', {'model': model})
+    menu_url = _router.rule_path('odm_ui@browse', {'model': model})
     _admin.sidebar.add_menu(
         'taxonomy', model, menu_title, menu_url, menu_icon, weight=menu_weight,
         permissions=(
-            'pytsite.odm_auth.create.' + model,
-            'pytsite.odm_auth.modify.' + model,
-            'pytsite.odm_auth.delete.' + model,
+            'odm_auth.create.' + model,
+            'odm_auth.modify.' + model,
+            'odm_auth.delete.' + model,
         )
     )
 

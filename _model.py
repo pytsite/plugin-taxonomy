@@ -1,8 +1,9 @@
 """PytSite Taxonomy Plugin Models
 """
 from typing import Tuple as _Tuple
-from pytsite import odm_ui as _odm_ui, lang as _lang, odm as _odm, widget as _widget, form as _form, \
-    events as _events, file as _file, file_storage_odm as _file_storage_odm
+from pytsite import lang as _lang, events as _events
+from plugins import widget as _widget, odm as _odm, file_storage_odm as _file_storage_odm, odm_ui as _odm_ui, \
+    file as _file, form as _form
 
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
