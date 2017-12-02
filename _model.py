@@ -3,7 +3,7 @@
 from typing import Tuple as _Tuple
 from pytsite import lang as _lang, events as _events
 from plugins import widget as _widget, odm as _odm, file_storage_odm as _file_storage_odm, odm_ui as _odm_ui, \
-    file as _file, form as _form
+    file as _file, form as _form, file_ui as _file_ui
 
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
@@ -184,7 +184,7 @@ class Term(_odm_ui.model.UIEntity):
 
         # Image
         if self.has_field('image'):
-            frm.add_widget(_file.widget.ImagesUpload(
+            frm.add_widget(_file_ui.widget.ImagesUpload(
                 uid='image',
                 weight=50,
                 label=_lang.t('taxonomy@image'),

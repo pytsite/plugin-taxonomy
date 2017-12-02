@@ -30,7 +30,7 @@ def _init():
     assetman.t_js(__name__ + '@js/**', 'js')
 
     # Search term route
-    router.handle(_controllers.SearchTerms(), '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
+    router.handle(_controllers.SearchTerms, '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
 
     # Admin sidebar menu
     admin.sidebar.add_section('taxonomy', __name__ + '@taxonomy', 500)
