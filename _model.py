@@ -102,14 +102,14 @@ class Term(_odm_ui.model.UIEntity):
         if not self.f_get('alias'):
             self.f_set('alias', self.f_get('title'))
 
-        _events.fire('taxonomy.term.pre_save', term=self)
+        _events.fire('taxonomy@term.pre_save', term=self)
 
     def _pre_delete(self, **kwargs):
         """Hook
         """
         super()._pre_delete(**kwargs)
 
-        _events.fire('taxonomy.term.pre_delete', term=self)
+        _events.fire('taxonomy@term.pre_delete', term=self)
 
     def _after_delete(self, **kwargs):
         """Hook
