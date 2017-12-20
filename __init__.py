@@ -13,18 +13,7 @@ if _plugman.is_installed(__name__):
 
 
 def plugin_load():
-    from pytsite import tpl, lang, router
-    from plugins import assetman, permissions, admin
-    from . import _controllers
-
-    # Permissions
-    permissions.define_group('taxonomy', 'taxonomy@taxonomy')
-
-    # Language resources
-    lang.register_package(__name__)
-
-    # Tpl resources
-    tpl.register_package(__name__)
+    from plugins import assetman
 
     # Assetman resources
     assetman.register_package(__name__)
@@ -32,8 +21,30 @@ def plugin_load():
     assetman.t_less(__name__)
     assetman.t_js(__name__)
 
+
+def plugin_load_uwsgi():
+    from pytsite import router, lang, tpl
+    from plugins import permissions, admin
+    from . import _controllers
+
+    # Language resources
+    lang.register_package(__name__)
+
+    # Tpl resources
+    tpl.register_package(__name__)
+
     # Search term route
     router.handle(_controllers.SearchTerms, '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
 
+    # Permissions
+    permissions.define_group('taxonomy', 'taxonomy@taxonomy')
+
     # Admin sidebar menu
     admin.sidebar.add_section('taxonomy', __name__ + '@taxonomy', 500)
+
+
+def plugin_install():
+    from plugins import assetman
+
+    plugin_load()
+    assetman.build(__name__)
