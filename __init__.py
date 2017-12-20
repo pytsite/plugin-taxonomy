@@ -13,7 +13,14 @@ if _plugman.is_installed(__name__):
 
 
 def plugin_load():
-    from plugins import assetman
+    from pytsite import lang
+    from plugins import permissions, assetman
+
+    # Permissions
+    permissions.define_group('taxonomy', 'taxonomy@taxonomy')
+
+    # Language resources
+    lang.register_package(__name__)
 
     # Assetman resources
     assetman.register_package(__name__)
@@ -23,21 +30,15 @@ def plugin_load():
 
 
 def plugin_load_uwsgi():
-    from pytsite import router, lang, tpl
-    from plugins import permissions, admin
+    from pytsite import router, tpl
+    from plugins import admin
     from . import _controllers
-
-    # Language resources
-    lang.register_package(__name__)
 
     # Tpl resources
     tpl.register_package(__name__)
 
     # Search term route
     router.handle(_controllers.SearchTerms, '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
-
-    # Permissions
-    permissions.define_group('taxonomy', 'taxonomy@taxonomy')
 
     # Admin sidebar menu
     admin.sidebar.add_section('taxonomy', __name__ + '@taxonomy', 500)
