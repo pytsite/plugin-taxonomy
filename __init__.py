@@ -12,21 +12,32 @@ if _plugman.is_installed(__name__):
     from ._api import register_model, is_model_registered, find, dispense, find_by_title, find_by_alias
 
 
+def _register_assetman_resources():
+    from plugins import assetman
+
+    if not assetman.is_package_registered(__name__):
+        assetman.register_package(__name__)
+        assetman.js_module('taxonomy-widget-cloud', __name__ + '@js/taxonomy-widget-cloud')
+        assetman.t_less(__name__)
+        assetman.t_js(__name__)
+
+    return assetman
+
+
+def plugin_install():
+    _register_assetman_resources().build(__name__)
+
+
 def plugin_load():
     from pytsite import lang
-    from plugins import permissions, assetman, admin
+    from plugins import permissions, admin
 
     # Permissions
     permissions.define_group('taxonomy', 'taxonomy@taxonomy')
 
-    # Language resources
+    # Resources
     lang.register_package(__name__)
-
-    # Assetman resources
-    assetman.register_package(__name__)
-    assetman.js_module('taxonomy-widget-cloud', __name__ + '@js/taxonomy-widget-cloud')
-    assetman.t_less(__name__)
-    assetman.t_js(__name__)
+    _register_assetman_resources()
 
     # Admin sidebar menu
     admin.sidebar.add_section('taxonomy', __name__ + '@taxonomy', 500)
@@ -41,10 +52,3 @@ def plugin_load_uwsgi():
 
     # Search term route
     router.handle(_controllers.SearchTerms, '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
-
-
-def plugin_install():
-    from plugins import assetman
-
-    plugin_load()
-    assetman.build(__name__)
