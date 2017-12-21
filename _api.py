@@ -1,7 +1,7 @@
 """PytSite Taxonomy API Functions.
 """
 import re
-from pytsite import router as _router, lang as _lang, util as _util
+from pytsite import reg as _reg, router as _router, lang as _lang, util as _util
 from plugins import admin as _admin, odm as _odm
 from ._model import Term as _Term
 
@@ -28,15 +28,16 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
     _odm.register_model(model, cls)
     _models.append(model)
 
-    menu_url = _router.rule_path('odm_ui@browse', {'model': model})
-    _admin.sidebar.add_menu(
-        'taxonomy', model, menu_title, menu_url, menu_icon, weight=menu_weight,
-        permissions=(
-            'odm_auth.create.' + model,
-            'odm_auth.modify.' + model,
-            'odm_auth.delete.' + model,
+    if _reg.get('env.type') == 'uwsgi':
+        menu_url = _router.rule_path('odm_ui@browse', {'model': model})
+        _admin.sidebar.add_menu(
+            'taxonomy', model, menu_title, menu_url, menu_icon, weight=menu_weight,
+            permissions=(
+                'odm_auth.create.' + model,
+                'odm_auth.modify.' + model,
+                'odm_auth.delete.' + model,
+            )
         )
-    )
 
 
 def is_model_registered(model: str) -> bool:
