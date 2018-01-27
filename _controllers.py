@@ -1,11 +1,11 @@
 """Taxonomy Endpoints
 """
-from pytsite import router as _router, routing as _routing, http as _http
-from . import _api
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from pytsite import router as _router, routing as _routing, http as _http
+from . import _api
 
 
 class SearchTerms(_routing.Controller):

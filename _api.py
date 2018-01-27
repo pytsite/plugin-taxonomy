@@ -1,29 +1,30 @@
 """PytSite Taxonomy API Functions.
 """
-import re
-from pytsite import reg as _reg, router as _router, lang as _lang, util as _util
-from plugins import admin as _admin, odm as _odm
-from ._model import Term as _Term
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
+import re
+from typing import Union as _Union
+from pytsite import reg as _reg, router as _router, lang as _lang, util as _util
+from plugins import admin as _admin, odm as _odm
+from ._model import Term as _Term
+
 _models = []
 
 
-def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_icon: str = 'fa fa-tags'):
-    """Register taxonomy model.
-    :param cls: str|type
+def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_icon: str = 'fa fa-tags',
+                   menu_roles: _Union[str, list, tuple] = ('admin', 'dev')):
+    """Register a taxonomy model
     """
-    if is_model_registered(model):
-        raise RuntimeError("Model '{}' is already registered as taxonomy model.".format(model))
+    if model in _models:
+        raise RuntimeError("Model '{}' is already registered as taxonomy model".format(model))
 
     if isinstance(cls, str):
         cls = _util.get_module_attr(cls)
 
     if not issubclass(cls, _Term):
-        raise TypeError('Subclass of AbstractTerm expected.')
+        raise TypeError('Subclass of {} expected'.format(_Term))
 
     _odm.register_model(model, cls)
     _models.append(model)
@@ -31,12 +32,14 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
     if _reg.get('env.type') == 'uwsgi':
         menu_url = _router.rule_path('odm_ui@browse', {'model': model})
         _admin.sidebar.add_menu(
-            'taxonomy', model, menu_title, menu_url, menu_icon, weight=menu_weight,
+            'taxonomy', model, menu_title, menu_url, menu_icon,
+            weight=menu_weight,
+            roles=menu_roles,
             permissions=(
-                'odm_auth.create.' + model,
-                'odm_auth.modify.' + model,
-                'odm_auth.delete.' + model,
-            )
+                'odm_auth@create.' + model,
+                'odm_auth@modify.' + model,
+                'odm_auth@delete.' + model,
+            ),
         )
 
 

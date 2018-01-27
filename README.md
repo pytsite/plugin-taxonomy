@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.3 (2018-01-27)
+
+Support for `admin-1.3`.
+
+
 ### 2.2.5 (2017-12-21)
 
 Admin item addition fixed.

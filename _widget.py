@@ -1,12 +1,12 @@
 """PytSite Taxonomy Plugin Widgets
 """
-from pytsite import html as _html, router as _router, tpl as _tpl, lang as _lang
-from plugins import widget as _widget, odm as _odm, odm_ui as _odm_ui
-from . import _api
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from pytsite import html as _html, router as _router, tpl as _tpl, lang as _lang
+from plugins import widget as _widget, odm as _odm, odm_ui as _odm_ui
+from . import _api
 
 
 class TermSelect(_odm_ui.widget.EntitySelect):

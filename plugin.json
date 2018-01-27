@@ -15,7 +15,8 @@
   "requires": {
     "packages": [],
     "plugins": [
-      "admin",
+      "admin>=1.3",
+      "auth>=1.8",
       "assetman",
       "file_storage_odm",
       "font_awesome",
