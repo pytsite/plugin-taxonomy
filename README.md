@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.3.1 (2018-01-29)
+
+`plugin.json` fixed.
+
+
 ### 2.3 (2018-01-27)
 
 Support for `admin-1.3`.

@@ -1,10 +1,10 @@
 {
   "name": "taxonomy",
-  "version": "2.2.5",
+  "version": "2.3.1",
   "description": {
     "en": "Taxonomy",
-    "ru": "Taxonomy",
-    "uk": "Taxonomy"
+    "ru": "Таксономия",
+    "uk": "Таксономія"
   },
   "url": "https://github.com/pytsite/plugin-taxonomy",
   "author": {
@@ -18,7 +18,9 @@
       "admin>=1.3",
       "auth>=1.8",
       "assetman",
+      "file",
       "file_storage_odm",
+      "file_ui",
       "font_awesome",
       "odm",
       "odm_ui",

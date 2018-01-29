@@ -29,12 +29,6 @@ def plugin_load():
     admin.sidebar.add_section('taxonomy', __name__ + '@taxonomy', 500)
 
 
-def plugin_install():
-    from plugins import assetman
-
-    assetman.build(__name__)
-
-
 def plugin_load_uwsgi():
     from pytsite import router, tpl
     from . import _controllers
@@ -44,3 +38,9 @@ def plugin_load_uwsgi():
 
     # Search term route
     router.handle(_controllers.SearchTerms, '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
+
+
+def plugin_install():
+    from plugins import assetman
+
+    assetman.build(__name__)
