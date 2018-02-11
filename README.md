@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.4.1 (2018-02-11)
+
+`plugin.json` fixed.
+
+
 ### 2.4 (2018-02-11)
 
 Support for PytSite-7.9.
