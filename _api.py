@@ -29,7 +29,7 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
     _odm.register_model(model, cls)
     _models.append(model)
 
-    if _reg.get('env.type') == 'uwsgi':
+    if _reg.get('env.type') == 'wsgi':
         menu_url = _router.rule_path('odm_ui@browse', {'model': model})
         _admin.sidebar.add_menu(
             'taxonomy', model, menu_title, menu_url, menu_icon,
