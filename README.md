@@ -4,6 +4,12 @@
 ## Changelog
 
 
+### 2.5 (2018-02-12)
+
+- Added `menu_sid` arg to the `register_model()`.
+- Admin's section 'Taxonomy' removed.
+
+
 ### 2.4.1 (2018-02-11)
 
 `plugin.json` fixed.

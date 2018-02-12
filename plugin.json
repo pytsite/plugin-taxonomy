@@ -1,6 +1,6 @@
 {
   "name": "taxonomy",
-  "version": "2.4.1",
+  "version": "2.5",
   "description": {
     "en": "Taxonomy",
     "ru": "Таксономия",
@@ -25,6 +25,7 @@
       "odm",
       "odm_ui",
       "permissions",
+      "settings",
       "widget"
     ]
   }
