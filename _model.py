@@ -124,10 +124,6 @@ class Term(_odm_ui.model.UIEntity):
             self.image.delete()
 
     @classmethod
-    def odm_ui_browser_widget_class(cls):
-        return _widget.misc.TreeTable
-
-    @classmethod
     def odm_ui_browser_setup(cls, browser: _odm_ui.Browser):
         """Hook
         """
