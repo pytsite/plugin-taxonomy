@@ -8,6 +8,7 @@ from typing import Tuple as _Tuple
 from pytsite import lang as _lang, events as _events
 from plugins import widget as _widget, odm as _odm, file_storage_odm as _file_storage_odm, odm_ui as _odm_ui, \
     file as _file, form as _form, file_ui as _file_ui
+from . import _widget as _t_widget
 
 
 class Term(_odm_ui.model.UIEntity):
@@ -28,9 +29,13 @@ class Term(_odm_ui.model.UIEntity):
         """Hook
         """
         self.define_index([('alias', _odm.I_ASC), ('language', _odm.I_ASC)], unique=True)
-        self.define_index([('language', _odm.I_ASC), ('weight', _odm.I_DESC)])
-        self.define_index([('weight', _odm.I_ASC)])
-        self.define_index([('order', _odm.I_ASC)])
+
+        if self.has_field('language') and self.has_field('weight'):
+            self.define_index([('language', _odm.I_ASC), ('weight', _odm.I_DESC)])
+            self.define_index([('weight', _odm.I_ASC)])
+
+        if self.has_field('order'):
+            self.define_index([('order', _odm.I_ASC)])
 
     @classmethod
     def odm_auth_permissions_group(cls) -> str:
@@ -119,33 +124,68 @@ class Term(_odm_ui.model.UIEntity):
             self.image.delete()
 
     @classmethod
+    def odm_ui_browser_widget_class(cls):
+        return _widget.misc.TreeTable
+
+    @classmethod
     def odm_ui_browser_setup(cls, browser: _odm_ui.Browser):
         """Hook
         """
         data_fields = [
             ('title', 'taxonomy@title'),
             ('alias', 'taxonomy@alias'),
-            ('weight', 'taxonomy@weight'),
-            ('order', 'taxonomy@order'),
         ]
 
+        if browser.mock.has_field('weight'):
+            data_fields.append(('weight', 'taxonomy@weight'))
+
+        if browser.mock.has_field('order'):
+            data_fields.append(('order', 'taxonomy@order'))
+
         browser.data_fields = data_fields
-        browser.default_sort_field = 'order'
         browser.default_sort_order = _odm.I_ASC
         browser.finder_adjust = lambda finder: finder.eq('language', _lang.get_current())
+        if browser.mock.has_field('order'):
+            browser.default_sort_field = 'order'
+        elif browser.mock.has_field('weight'):
+            browser.default_sort_field = 'weight'
+        else:
+            browser.default_sort_field = 'title'
 
-    def odm_ui_browser_row(self) -> tuple:
+    def odm_ui_browser_row(self) -> dict:
         """Hook
         """
-        return self.title, self.alias, self.weight, self.order
+        r = {
+            'title': self.title,
+            'alias': self.alias,
+        }
+
+        if self.has_field('weight'):
+            r['weight'] = self.weight
+
+        if self.has_field('order'):
+            r['order'] = self.order
+
+        return r
 
     def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
         """Hook
         """
+        # Parent
+        frm.add_widget(_t_widget.TermSelect(
+            uid='_parent',
+            model=self.model,
+            caption_field='title',
+            exclude=self if not self.is_new else None,
+            exclude_descendants=True,
+            label=self.t('parent'),
+            value=self.parent,
+        ))
+
         # Title
         if self.has_field('title'):
             frm.add_widget(_widget.input.Text(
-                weight=10,
+                weight=20,
                 uid='title',
                 label=_lang.t('taxonomy@title'),
                 value=self.title,
@@ -155,7 +195,7 @@ class Term(_odm_ui.model.UIEntity):
         # Alias
         if self.has_field('alias'):
             frm.add_widget(_widget.input.Text(
-                weight=20,
+                weight=30,
                 uid='alias',
                 label=_lang.t('taxonomy@alias'),
                 value=self.f_get('alias'),
@@ -164,7 +204,7 @@ class Term(_odm_ui.model.UIEntity):
         # Weight
         if self.has_field('weight'):
             frm.add_widget(_widget.input.Integer(
-                weight=30,
+                weight=40,
                 uid='weight',
                 label=_lang.t('taxonomy@weight'),
                 value=self.weight,
@@ -174,7 +214,7 @@ class Term(_odm_ui.model.UIEntity):
         # Order
         if self.has_field('order'):
             frm.add_widget(_widget.input.Integer(
-                weight=40,
+                weight=50,
                 uid='order',
                 label=_lang.t('taxonomy@order'),
                 value=self.order,
@@ -186,7 +226,7 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('image'):
             frm.add_widget(_file_ui.widget.ImagesUpload(
                 uid='image',
-                weight=50,
+                weight=60,
                 label=_lang.t('taxonomy@image'),
                 required=self.get_field('image').required,
                 value=self.image,
@@ -197,7 +237,7 @@ class Term(_odm_ui.model.UIEntity):
             lng = _lang.get_current() if self.is_new else self.language
             frm.add_widget(_widget.static.Text(
                 uid='language',
-                weight=60,
+                weight=70,
                 label=_lang.t('taxonomy@language'),
                 title=_lang.lang_title(lng),
                 value=lng,

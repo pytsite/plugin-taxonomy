@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.6 (2018-02-27)
+
+Support for entity trees.
+
+
 ### 2.5 (2018-02-12)
 
 - Added `menu_sid` arg to the `register_model()`.

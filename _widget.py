@@ -21,10 +21,7 @@ class TermSelect(_odm_ui.widget.EntitySelect):
         self._language = kwargs.get('language', _lang.get_current())
 
     def _get_finder(self):
-        finder = super()._get_finder()
-        finder.eq('language', self._language)
-
-        return finder
+        return super()._get_finder().eq('language', self._language)
 
 
 class TokensInput(_widget.input.Tokens):

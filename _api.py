@@ -51,7 +51,12 @@ def find(model: str, language: str = None):
     if not is_model_registered(model):
         raise RuntimeError("Model '{}' is not registered as taxonomy model.".format(model))
 
-    f = _odm.find(model).sort([('weight', _odm.I_DESC)])
+    f = _odm.find(model)
+
+    if f.mock.has_field('weight'):
+        f.sort([('weight', _odm.I_DESC)])
+    elif f.mock.has_field('order'):
+        f.sort([('order', _odm.I_ASC)])
 
     if not language:
         f.eq('language', _lang.get_current())
