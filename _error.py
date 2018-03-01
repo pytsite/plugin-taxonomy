@@ -14,18 +14,20 @@ class ModelNotRegistered(Exception):
 
 
 class TermNotExist(Exception):
-    def __init__(self, model: str, alias: str):
+    def __init__(self, model: str, alias: str, language: str):
         self._model = model
         self._alias = alias
+        self._language = language
 
     def __str__(self) -> str:
-        return 'Term {}.{} is not exists'.format(self._model, self._alias)
+        return 'Term {}.{} [{}] is not exists'.format(self._model, self._alias, self._language)
 
 
 class TermExists(Exception):
-    def __init__(self, model: str, alias: str):
+    def __init__(self, model: str, alias: str, language: str):
         self._model = model
         self._alias = alias
+        self._language = language
 
     def __str__(self) -> str:
-        return 'Term {}.{} already exists'.format(self._model, self._alias)
+        return 'Term {}.{} [{}] already exists'.format(self._model, self._alias, self._language)

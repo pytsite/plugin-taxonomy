@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.9.1 (2018-03-01)
+
+Signatures of constructors of some exceptions changed.
+
+
 ### 2.9 (2018-03-01)
 
 - Errors fixed.

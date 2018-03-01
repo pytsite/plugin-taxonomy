@@ -109,7 +109,7 @@ class Term(_odm_ui.model.UIEntity):
                 value = ''
 
             if not isinstance(value, str):
-                raise RuntimeError('str or None expected.')
+                raise RuntimeError('str or None expected')
 
             value = value.strip()
             if not self.is_new:

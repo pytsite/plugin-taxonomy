@@ -85,7 +85,7 @@ def get(model: str, alias: str, language: str = None):
     term = find_by_alias(model, alias, language)
 
     if not term:
-        raise _error.TermNotExist(model, alias)
+        raise _error.TermNotExist(model, alias, language)
 
     return term
 
@@ -111,7 +111,7 @@ def create(model: str, title: str, alias: str = None, language: str = None, pare
     """Create a new term
     """
     if find_by_alias(model, alias, language):
-        raise _error.TermExists(model, alias)
+        raise _error.TermExists(model, alias, language)
 
     return dispense(model, title, alias, language, parent)
 
