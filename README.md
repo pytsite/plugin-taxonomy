@@ -4,6 +4,14 @@
 ## Changelog
 
 
+### 2.7 (2018-03-01)
+
+- `error` module added.
+- New API function added: `create()`.
+- Automatic term's order calculation added.
+- ODM indexes refactored.
+
+
 ### 2.6.1 (2018-02-27)
 
 Default ODM UI widget fixed.

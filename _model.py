@@ -5,6 +5,7 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 from typing import Tuple as _Tuple
+from math import ceil as _ceil
 from pytsite import lang as _lang, events as _events
 from plugins import widget as _widget, odm as _odm, file_storage_odm as _file_storage_odm, odm_ui as _odm_ui, \
     file as _file, form as _form, file_ui as _file_ui
@@ -30,12 +31,17 @@ class Term(_odm_ui.model.UIEntity):
         """
         self.define_index([('alias', _odm.I_ASC), ('language', _odm.I_ASC)], unique=True)
 
-        if self.has_field('language') and self.has_field('weight'):
-            self.define_index([('language', _odm.I_ASC), ('weight', _odm.I_DESC)])
-            self.define_index([('weight', _odm.I_ASC)])
+        if self.has_field('weight'):
+            if self.has_field('language'):
+                self.define_index([('language', _odm.I_ASC), ('weight', _odm.I_DESC)])
+            else:
+                self.define_index([('weight', _odm.I_DESC)])
 
         if self.has_field('order'):
-            self.define_index([('order', _odm.I_ASC)])
+            if self.has_field('language'):
+                self.define_index([('language', _odm.I_ASC), ('order', _odm.I_DESC)])
+            else:
+                self.define_index([('order', _odm.I_ASC)])
 
     @classmethod
     def odm_auth_permissions_group(cls) -> str:
@@ -49,25 +55,49 @@ class Term(_odm_ui.model.UIEntity):
     def title(self) -> str:
         return self.f_get('title')
 
+    @title.setter
+    def title(self, value: str):
+        self.f_set('title', value)
+
     @property
     def alias(self) -> str:
         return self.f_get('alias')
+
+    @alias.setter
+    def alias(self, value: str):
+        self.f_set('alias', value)
 
     @property
     def language(self) -> str:
         return self.f_get('language')
 
+    @language.setter
+    def language(self, value: str):
+        self.f_set('language', value)
+
     @property
     def weight(self) -> int:
         return self.f_get('weight')
+
+    @weight.setter
+    def weight(self, value: int):
+        self.f_set('weight', value)
 
     @property
     def order(self) -> int:
         return self.f_get('order')
 
+    @order.setter
+    def order(self, value: int):
+        self.f_set('order', value)
+
     @property
     def image(self) -> _file.model.AbstractImage:
         return self.f_get('image')
+
+    @image.setter
+    def image(self, value: _file.model.AbstractImage):
+        self.f_set('image', value)
 
     def _on_f_set(self, field_name: str, value, **kwargs):
         """Hook
@@ -106,6 +136,11 @@ class Term(_odm_ui.model.UIEntity):
         # Alias is mandatory
         if not self.f_get('alias'):
             self.f_set('alias', self.f_get('title'))
+
+        if self.is_new and self.has_field('order') and not self.order:
+            from . import _api
+            e = _api.find(self.model).eq('_parent', self.parent).sort([('order', _odm.I_DESC)]).first()
+            self.order = ((int(_ceil(e.order / 10.0)) * 10) + 10) if e else 10
 
         _events.fire('taxonomy@term.pre_save', term=self)
 

@@ -5,9 +5,10 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 import re
-from typing import Union as _Union
+from typing import Union as _Union, Optional as _Optional
 from pytsite import reg as _reg, router as _router, lang as _lang, util as _util
 from plugins import admin as _admin, odm as _odm
+from . import _error
 from ._model import Term as _Term
 
 _models = []
@@ -40,13 +41,13 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
 
 
 def is_model_registered(model: str) -> bool:
-    """Check if the model is registered as taxonomy model.
+    """Check if the model is registered as taxonomy model
     """
     return model in _models
 
 
 def find(model: str, language: str = None):
-    """Get finder for the taxonomy model.
+    """Get finder for the taxonomy model
     """
     if not is_model_registered(model):
         raise RuntimeError("Model '{}' is not registered as taxonomy model.".format(model))
@@ -66,20 +67,20 @@ def find(model: str, language: str = None):
     return f
 
 
-def find_by_title(model: str, title: str, language: str = None) -> _Term:
-    """Find term by title.
+def find_by_title(model: str, title: str, language: str = None) -> _Optional[_Term]:
+    """Find a term by title
     """
     return find(model, language).where('title', 'regex_i', '^{}$'.format(title)).first()
 
 
-def find_by_alias(model: str, alias: str, language: str = None) -> _Term:
-    """Find term by alias.
+def find_by_alias(model: str, alias: str, language: str = None) -> _Optional[_Term]:
+    """Find a term by alias
     """
     return find(model, language).eq('alias', alias).first()
 
 
 def dispense(model: str, title: str, alias: str = None, language: str = None) -> _Term:
-    """Create new term or dispense existing.
+    """Create new term or dispense existing
     """
     if not is_model_registered(model):
         raise RuntimeError("Model '{}' is not registered as taxonomy model.".format(model))
@@ -89,25 +90,30 @@ def dispense(model: str, title: str, alias: str = None, language: str = None) ->
     if not alias:
         alias = _util.transform_str_2(title)
 
-    # Trying to find term by title
-    term = find(model, language).where('title', 'regex_i', '^' + title + '$').first()
-
-    # If term is not found, trying to find it by alias
-    if not term:
-        term = find(model, language).eq('alias', alias).first()
+    term = find(model, language).eq('alias', alias).first()
 
     # If term is not found, create it
     if not term:
-        term = _odm.dispense(model)
-        term.f_set('title', title).f_set('language', language or _lang.get_current())
-        if alias:
+        term = _odm.dispense(model).f_set('title', title)
+        if term.has_field('language'):
+            term.f_set('language', language or _lang.get_current())
+        if term.has_field('alias') and alias:
             term.f_set('alias', alias)
 
     return term
 
 
+def create(model: str, title: str, alias: str = None, language: str = None) -> _Term:
+    """Create a new term
+    """
+    if find_by_alias(model, alias, language):
+        raise _error.TermExists(model, alias)
+
+    return dispense(model, title, alias, language)
+
+
 def sanitize_alias(model: str, s: str, language: str = None) -> str:
-    """Sanitize an alias string.
+    """Sanitize an alias string
     """
     s = _util.transform_str_2(s)
 

@@ -6,8 +6,11 @@ __license__ = 'MIT'
 
 # Public API
 from . import _api, _model as model, _widget as widget
-from ._api import register_model, is_model_registered, find, dispense, find_by_title, find_by_alias
+from . import _error as error
+from ._api import register_model, is_model_registered, find, dispense, create, find_by_title, find_by_alias
 from ._model import Term
+
+from pytsite import semver as _semver
 
 
 def plugin_load():
@@ -42,3 +45,10 @@ def plugin_load_wsgi():
 
     # Search term route
     router.handle(_controllers.SearchTerms, '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
+
+
+def plugin_update(v_from: _semver.Version):
+    if v_from < '2.7':
+        from plugins import odm
+
+        odm.reindex()
