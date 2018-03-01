@@ -79,6 +79,17 @@ def find_by_alias(model: str, alias: str, language: str = None) -> _Optional[_Te
     return find(model, language).eq('alias', alias).first()
 
 
+def get(model: str, alias: str, language: str = None):
+    """Get a term by alias
+    """
+    term = find_by_alias(model, alias, language)
+
+    if not term:
+        raise _error.TermNotExist(model, alias)
+
+    return term
+
+
 def dispense(model: str, title: str, alias: str = None, language: str = None) -> _Term:
     """Create new term or dispense existing
     """
@@ -103,7 +114,7 @@ def dispense(model: str, title: str, alias: str = None, language: str = None) ->
     return term
 
 
-def create(model: str, title: str, alias: str = None, language: str = None) -> _Term:
+def create(model: str, title: str, alias: str = None, language: str = None, parent: _Term = None) -> _Term:
     """Create a new term
     """
     if find_by_alias(model, alias, language):

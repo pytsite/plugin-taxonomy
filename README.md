@@ -4,6 +4,13 @@
 ## Changelog
 
 
+### 2.8 (2018-03-01)
+
+- New API function: `get()`.
+- New argument `parent` in `create()`.
+- New exception: `error.TermNotExist`.
+
+
 ### 2.7 (2018-03-01)
 
 - `error` module added.
