@@ -4,6 +4,12 @@
 ## Changelog
 
 
+### 2.9 (2018-03-01)
+
+- Errors fixed.
+- Support for `odm-1.8` added.
+
+
 ### 2.8 (2018-03-01)
 
 - New API function: `get()`.

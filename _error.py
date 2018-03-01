@@ -5,6 +5,14 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 
+class ModelNotRegistered(Exception):
+    def __init__(self, model: str):
+        self._model = model
+
+    def __str__(self) -> str:
+        return "Taxonomy model '{}' is not registered".format(self._model)
+
+
 class TermNotExist(Exception):
     def __init__(self, model: str, alias: str):
         self._model = model

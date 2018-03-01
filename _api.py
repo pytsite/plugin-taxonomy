@@ -90,26 +90,19 @@ def get(model: str, alias: str, language: str = None):
     return term
 
 
-def dispense(model: str, title: str, alias: str = None, language: str = None) -> _Term:
+def dispense(model: str, title: str, alias: str = None, language: str = None, parent: _Term = None) -> _Term:
     """Create new term or dispense existing
     """
-    if not is_model_registered(model):
-        raise RuntimeError("Model '{}' is not registered as taxonomy model.".format(model))
-
-    title = title.strip()
-
-    if not alias:
-        alias = _util.transform_str_2(title)
-
-    term = find(model, language).eq('alias', alias).first()
-
-    # If term is not found, create it
-    if not term:
-        term = _odm.dispense(model).f_set('title', title)
+    try:
+        term = get(model, alias, language)
+    except _error.TermNotExist:
+        term = _odm.dispense(model)  # type: _Term
+        term.title = title.strip()
+        term.parent = parent
         if term.has_field('language'):
-            term.f_set('language', language or _lang.get_current())
+            term.language = language or _lang.get_current()
         if term.has_field('alias') and alias:
-            term.f_set('alias', alias)
+            term.alias = alias or _util.transform_str_2(title)
 
     return term
 
@@ -120,7 +113,7 @@ def create(model: str, title: str, alias: str = None, language: str = None, pare
     if find_by_alias(model, alias, language):
         raise _error.TermExists(model, alias)
 
-    return dispense(model, title, alias, language)
+    return dispense(model, title, alias, language, parent)
 
 
 def sanitize_alias(model: str, s: str, language: str = None) -> str:
