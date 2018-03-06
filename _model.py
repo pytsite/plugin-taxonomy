@@ -205,6 +205,7 @@ class Term(_odm_ui.model.UIEntity):
         # Parent
         frm.add_widget(_t_widget.TermSelect(
             uid='_parent',
+            weight=10,
             model=self.model,
             caption_field='title',
             exclude=self if not self.is_new else None,
@@ -216,8 +217,8 @@ class Term(_odm_ui.model.UIEntity):
         # Title
         if self.has_field('title'):
             frm.add_widget(_widget.input.Text(
-                weight=20,
                 uid='title',
+                weight=20,
                 label=_lang.t('taxonomy@title'),
                 value=self.title,
                 required=self.get_field('title').required,
@@ -226,8 +227,8 @@ class Term(_odm_ui.model.UIEntity):
         # Alias
         if self.has_field('alias'):
             frm.add_widget(_widget.input.Text(
-                weight=30,
                 uid='alias',
+                weight=30,
                 label=_lang.t('taxonomy@alias'),
                 value=self.f_get('alias'),
             ))
@@ -235,8 +236,8 @@ class Term(_odm_ui.model.UIEntity):
         # Weight
         if self.has_field('weight'):
             frm.add_widget(_widget.input.Integer(
-                weight=40,
                 uid='weight',
+                weight=40,
                 label=_lang.t('taxonomy@weight'),
                 value=self.weight,
                 h_size='col-sm-3 col-md-2 col-lg-1'
@@ -245,8 +246,8 @@ class Term(_odm_ui.model.UIEntity):
         # Order
         if self.has_field('order'):
             frm.add_widget(_widget.input.Integer(
-                weight=50,
                 uid='order',
+                weight=50,
                 label=_lang.t('taxonomy@order'),
                 value=self.order,
                 h_size='col-sm-3 col-md-2 col-lg-1',
@@ -256,8 +257,8 @@ class Term(_odm_ui.model.UIEntity):
         # Image
         if self.has_field('image'):
             frm.add_widget(_file_ui.widget.ImagesUpload(
-                uid='image',
                 weight=60,
+                uid='image',
                 label=_lang.t('taxonomy@image'),
                 required=self.get_field('image').required,
                 value=self.image,
@@ -267,11 +268,12 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('language'):
             lng = _lang.get_current() if self.is_new else self.language
             frm.add_widget(_widget.static.Text(
-                uid='language',
                 weight=70,
+                uid='language',
                 label=_lang.t('taxonomy@language'),
                 title=_lang.lang_title(lng),
                 value=lng,
+                hidden=len(_lang.langs()) == 1,
             ))
 
     def odm_ui_mass_action_entity_description(self) -> str:

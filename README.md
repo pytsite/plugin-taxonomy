@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.9.2 (2018-03-06)
+
+Missing widget's weight definition fixed.
+
+
 ### 2.9.1 (2018-03-01)
 
 Signatures of constructors of some exceptions changed.
