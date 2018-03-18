@@ -4,6 +4,12 @@
 ## Changelog
 
 
+### 3.0 (2018-03-18)
+
+- `create()` API method removed.
+- Behaviour of `dispense()` changed.
+
+
 ### 2.9.2 (2018-03-06)
 
 Missing widget's weight definition fixed.

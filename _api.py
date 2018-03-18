@@ -36,7 +36,7 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
             menu_sid, model, menu_title, menu_url, menu_icon,
             weight=menu_weight,
             roles=menu_roles,
-            permissions=('odm_auth@create.' + model, 'odm_auth@modify.' + model, 'odm_auth@delete.' + model),
+            permissions=['odm_auth@{}.{}'.format(pt, model) for pt in cls.odm_auth_permissions()],
         )
 
 
@@ -80,7 +80,7 @@ def find_by_alias(model: str, alias: str, language: str = None) -> _Optional[_Te
 
 
 def get(model: str, alias: str, language: str = None):
-    """Get a term by alias
+    """Get a term by alias, raise exception if not it does not exist
     """
     term = find_by_alias(model, alias, language)
 
@@ -91,29 +91,20 @@ def get(model: str, alias: str, language: str = None):
 
 
 def dispense(model: str, title: str, alias: str = None, language: str = None, parent: _Term = None) -> _Term:
-    """Create new term or dispense existing
+    """Dispense a new term or raise exception if term with specified alias already exists
     """
-    try:
-        term = get(model, alias, language)
-    except _error.TermNotExist:
-        term = _odm.dispense(model)  # type: _Term
-        term.title = title.strip()
-        term.parent = parent
-        if term.has_field('language'):
-            term.language = language or _lang.get_current()
-        if term.has_field('alias') and alias:
-            term.alias = alias or _util.transform_str_2(title)
-
-    return term
-
-
-def create(model: str, title: str, alias: str = None, language: str = None, parent: _Term = None) -> _Term:
-    """Create a new term
-    """
-    if find_by_alias(model, alias, language):
+    if alias and find_by_alias(model, alias, language):
         raise _error.TermExists(model, alias, language or _lang.get_current())
 
-    return dispense(model, title, alias, language, parent)
+    term = _odm.dispense(model)  # type: _Term
+    term.title = title.strip()
+    term.parent = parent
+    if term.has_field('language'):
+        term.language = language or _lang.get_current()
+    if term.has_field('alias') and alias:
+        term.alias = alias or _util.transform_str_2(title)
+
+    return term
 
 
 def sanitize_alias(model: str, s: str, language: str = None) -> str:

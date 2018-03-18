@@ -38,7 +38,7 @@ class TokensInput(_widget.input.Tokens):
 
         self._model = kwargs.get('model')
         if not self._model:
-            raise ValueError('Model is not specified.')
+            raise ValueError('Model is not specified')
 
         self._remote_source = _router.rule_url('taxonomy@search_terms', {
             'model': self._model,
@@ -64,8 +64,10 @@ class TokensInput(_widget.input.Tokens):
             if isinstance(v, _odm.model.Entity):
                 clean_value.append(v)
             elif isinstance(v, str) and v:
-                term = _api.dispense(self._model, v)
-                clean_value.append(term.save())
+                term = _api.find_by_title(self._model, v)
+                if not term:
+                    term = _api.dispense(self._model, v).save()
+                clean_value.append(term)
 
         super().set_val(clean_value)
 
