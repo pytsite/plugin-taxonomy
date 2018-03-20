@@ -4,6 +4,12 @@
 ## Changelog
 
 
+### 3.0.1 (2018-03-20)
+
+Default value of argument `caption_field` of
+`widget.TermSelect.__init()__` set to 'title'.
+
+
 ### 3.0 (2018-03-18)
 
 - `create()` API method removed.

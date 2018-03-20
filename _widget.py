@@ -15,6 +15,7 @@ class TermSelect(_odm_ui.widget.EntitySelect):
 
     def __init__(self, uid: str, **kwargs):
         kwargs.setdefault('sort_field', 'order')
+        kwargs.setdefault('caption_field', 'title')
 
         super().__init__(uid, **kwargs)
 
