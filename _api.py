@@ -70,7 +70,7 @@ def find(model: str, language: str = None):
 def find_by_title(model: str, title: str, language: str = None) -> _Optional[_Term]:
     """Find a term by title
     """
-    return find(model, language).where('title', 'regex_i', '^{}$'.format(title)).first()
+    return find(model, language).regex('title', '^{}$'.format(title), True).first()
 
 
 def find_by_alias(model: str, alias: str, language: str = None) -> _Optional[_Term]:

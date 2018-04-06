@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.1 (2018-04-07)
+
+Support of `odm-2.0`.
+
+
 ### 3.0.1 (2018-03-20)
 
 Default value of argument `caption_field` of

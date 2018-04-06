@@ -23,6 +23,6 @@ class SearchTerms(_routing.Controller):
             f.ninc('title', exclude)
 
         for word in self.arg('query').split(' '):
-            f.where('title', 'regex_i', word.strip())
+            f.regex('title', word.strip(), True)
 
         return _http.response.JSON([e.f_get('title') for e in f.get(10)])
