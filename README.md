@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.2 (2018-04-14)
+
+Support of `odm_ui-3.0`.
+
+
 ### 3.1 (2018-04-07)
 
 Support of `odm-2.0`.
