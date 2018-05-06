@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.3 (2018-05-06)
+
+Support of PytSite-7.17.
+
+
 ### 3.2 (2018-04-14)
 
 Support of `odm_ui-3.0`.

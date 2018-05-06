@@ -25,4 +25,4 @@ class SearchTerms(_routing.Controller):
         for word in self.arg('query').split(' '):
             f.regex('title', word.strip(), True)
 
-        return _http.response.JSON([e.f_get('title') for e in f.get(10)])
+        return _http.JSONResponse([e.f_get('title') for e in f.get(10)])
