@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.4 (2018-05-13)
+
+Support of `widget-2.0`.
+
+
 ### 3.3 (2018-05-06)
 
 Support of PytSite-7.17.
