@@ -15,11 +15,12 @@ _models = []
 
 
 def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_icon: str = 'fa fa-tags',
-                   menu_sid: str = 'settings', menu_roles: _Union[str, list, tuple] = ('admin', 'dev')):
+                   menu_sid: str = 'settings', menu_roles: _Union[str, list, tuple] = ('admin', 'dev'),
+                   menu_permissions: _Union[str, list, tuple] = None):
     """Register a taxonomy model
     """
     if model in _models:
-        raise RuntimeError("Model '{}' is already registered as taxonomy model".format(model))
+        raise RuntimeError("Taxonomy model '{}' is already registered".format(model))
 
     if isinstance(cls, str):
         cls = _util.get_module_attr(cls)
@@ -36,6 +37,7 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
             menu_sid, model, menu_title, menu_url, menu_icon,
             weight=menu_weight,
             roles=menu_roles,
+            permissions=menu_permissions,
         )
 
 

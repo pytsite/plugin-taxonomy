@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.6 (2018-08-09)
+
+`menu_permissions` argument added in `register_model()`.
+
+
 ### 3.5 (2018-08-09)
 
 Support of `odm_auth-1.9`.
