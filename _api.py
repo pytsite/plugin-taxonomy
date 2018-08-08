@@ -1,6 +1,6 @@
 """PytSite Taxonomy API Functions.
 """
-__author__ = 'Alexander Shepetko'
+__author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
@@ -36,7 +36,6 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
             menu_sid, model, menu_title, menu_url, menu_icon,
             weight=menu_weight,
             roles=menu_roles,
-            permissions=['odm_auth@{}.{}'.format(pt, model) for pt in cls.odm_auth_permissions()],
         )
 
 

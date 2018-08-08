@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.5 (2018-08-09)
+
+Support of `odm_auth-1.9`.
+
+
 ### 3.4 (2018-05-13)
 
 Support of `widget-2.0`.
