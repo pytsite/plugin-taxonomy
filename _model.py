@@ -271,7 +271,7 @@ class Term(_odm_ui.model.UIEntity):
                 weight=70,
                 uid='language',
                 label=_lang.t('taxonomy@language'),
-                title=_lang.lang_title(lng),
+                text=_lang.lang_title(lng),
                 value=lng,
                 hidden=len(_lang.langs()) == 1,
             ))

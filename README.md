@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.7 (2018-08-21)
+
+Support of `widget-2.11`.
+
+
 ### 3.6 (2018-08-09)
 
 `menu_permissions` argument added in `register_model()`.
