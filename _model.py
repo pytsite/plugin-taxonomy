@@ -205,7 +205,6 @@ class Term(_odm_ui.model.UIEntity):
         # Parent
         frm.add_widget(_t_widget.TermSelect(
             uid='_parent',
-            weight=10,
             model=self.model,
             caption_field='title',
             exclude=self if not self.is_new else None,
@@ -218,7 +217,6 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('title'):
             frm.add_widget(_widget.input.Text(
                 uid='title',
-                weight=20,
                 label=_lang.t('taxonomy@title'),
                 value=self.title,
                 required=self.get_field('title').required,
@@ -228,7 +226,6 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('alias'):
             frm.add_widget(_widget.input.Text(
                 uid='alias',
-                weight=30,
                 label=_lang.t('taxonomy@alias'),
                 value=self.f_get('alias'),
             ))
@@ -237,7 +234,6 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('weight'):
             frm.add_widget(_widget.input.Integer(
                 uid='weight',
-                weight=40,
                 label=_lang.t('taxonomy@weight'),
                 value=self.weight,
                 h_size='col-sm-3 col-md-2 col-lg-1'
@@ -247,7 +243,6 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('order'):
             frm.add_widget(_widget.input.Integer(
                 uid='order',
-                weight=50,
                 label=_lang.t('taxonomy@order'),
                 value=self.order,
                 h_size='col-sm-3 col-md-2 col-lg-1',
@@ -257,7 +252,6 @@ class Term(_odm_ui.model.UIEntity):
         # Image
         if self.has_field('image'):
             frm.add_widget(_file_ui.widget.ImagesUpload(
-                weight=60,
                 uid='image',
                 label=_lang.t('taxonomy@image'),
                 required=self.get_field('image').required,
@@ -268,7 +262,6 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('language'):
             lng = _lang.get_current() if self.is_new else self.language
             frm.add_widget(_widget.static.Text(
-                weight=70,
                 uid='language',
                 label=_lang.t('taxonomy@language'),
                 text=_lang.lang_title(lng),

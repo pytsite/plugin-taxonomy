@@ -38,6 +38,7 @@ def plugin_install():
 
 def plugin_load_wsgi():
     from pytsite import router, tpl
+    from plugins import admin
     from . import _controllers
 
     # Tpl resources
@@ -45,6 +46,9 @@ def plugin_load_wsgi():
 
     # Search term route
     router.handle(_controllers.SearchTerms, '/taxonomy/search/<model>/<query>', 'taxonomy@search_terms')
+
+    # Admin sidebar section
+    admin.sidebar.add_section('taxonomy', 'taxonomy@taxonomy', 0, 'title')
 
 
 def plugin_update(v_from: _semver.Version):

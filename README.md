@@ -4,6 +4,14 @@
 ## Changelog
 
 
+### 3.8 (2018-08-28)
+
+- New widget `TermSelectSearch`.
+- Separate 'Taxonomy' section added to admin sidebar's interface.
+- Widgets weights fixed.
+
+
+
 ### 3.7 (2018-08-21)
 
 Support of `widget-2.11`.

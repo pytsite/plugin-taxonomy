@@ -14,8 +14,8 @@ from ._model import Term as _Term
 _models = []
 
 
-def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_icon: str = 'fa fa-tags',
-                   menu_sid: str = 'settings', menu_roles: _Union[str, list, tuple] = ('admin', 'dev'),
+def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_icon: str = 'fa fas fa-tags',
+                   menu_sid: str = 'taxonomy', menu_roles: _Union[str, list, tuple] = ('admin', 'dev'),
                    menu_permissions: _Union[str, list, tuple] = None):
     """Register a taxonomy model
     """

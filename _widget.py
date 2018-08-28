@@ -25,6 +25,12 @@ class TermSelect(_odm_ui.widget.EntitySelect):
         return super()._get_finder().eq('language', self._language)
 
 
+class TermSelectSearch(_odm_ui.widget.EntitySelectSearch):
+    """Term Select With Search
+    """
+    pass
+
+
 class TokensInput(_widget.input.Tokens):
     """Term Tokens Input Widget
     """
