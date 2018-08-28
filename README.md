@@ -3,6 +3,10 @@
 
 ## Changelog
 
+### 3.8.1 (2017-08-28)
+
+Ukrainian terms titles transliteration fixed.
+
 
 ### 3.8 (2018-08-28)
 

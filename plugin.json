@@ -1,6 +1,6 @@
 {
   "name": "taxonomy",
-  "version": "3.8",
+  "version": "3.8.1",
   "description": {
     "en": "Taxonomy",
     "ru": "Таксономия",
@@ -13,7 +13,7 @@
     "url": "https://shepetko.com"
   },
   "requires": {
-    "pytsite": ">=7.17",
+    "pytsite": ">=7.32",
     "plugins": [
       "admin>=1.3",
       "auth>=1.8",

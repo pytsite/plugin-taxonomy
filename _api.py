@@ -103,7 +103,7 @@ def dispense(model: str, title: str, alias: str = None, language: str = None, pa
     if term.has_field('language'):
         term.language = language or _lang.get_current()
     if term.has_field('alias') and alias:
-        term.alias = alias or _util.transform_str_2(title)
+        term.alias = alias or _util.transform_str_2(title, language)
 
     return term
 
@@ -111,7 +111,7 @@ def dispense(model: str, title: str, alias: str = None, language: str = None, pa
 def sanitize_alias(model: str, s: str, language: str = None) -> str:
     """Sanitize an alias string
     """
-    s = _util.transform_str_2(s)
+    s = _util.transform_str_2(s, language)
 
     itr = 0
     while True:
