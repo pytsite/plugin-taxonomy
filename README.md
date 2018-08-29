@@ -3,6 +3,13 @@
 
 ## Changelog
 
+
+### 4.0 (2017-08-29)
+
+- Removed API functions: `find_by_title()`, `find_by_alias()`.
+- API function `get()` rewritten.
+
+
 ### 3.8.1 (2017-08-28)
 
 Ukrainian terms titles transliteration fixed.

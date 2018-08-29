@@ -7,7 +7,7 @@ __license__ = 'MIT'
 # Public API
 from . import _api, _model as model, _widget as widget
 from . import _error as error
-from ._api import register_model, is_model_registered, find, get, dispense, find_by_title, find_by_alias
+from ._api import register_model, is_model_registered, find, dispense, get
 from ._model import Term
 
 from pytsite import semver as _semver

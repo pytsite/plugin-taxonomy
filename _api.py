@@ -68,24 +68,22 @@ def find(model: str, language: str = None):
     return f
 
 
-def find_by_title(model: str, title: str, language: str = None) -> _Optional[_Term]:
+def get(model: str, title: str = None, alias: str = None, language: str = None,
+        exceptions: bool = False) -> _Optional[_Term]:
     """Find a term by title
     """
-    return find(model, language).regex('title', '^{}$'.format(title), True).first()
+    if not (title or alias):
+        raise ValueError('At least title or alias argument must be specified')
 
+    f = find(model, language)
+    if title:
+        f.regex('title', '^{}$'.format(title), True)
+    if alias:
+        f.eq('alias', alias)
 
-def find_by_alias(model: str, alias: str, language: str = None) -> _Optional[_Term]:
-    """Find a term by alias
-    """
-    return find(model, language).eq('alias', alias).first()
+    term = f.first()
 
-
-def get(model: str, alias: str, language: str = None):
-    """Get a term by alias, raise exception if not it does not exist
-    """
-    term = find_by_alias(model, alias, language)
-
-    if not term:
+    if not term and exceptions:
         raise _error.TermNotExist(model, alias, language or _lang.get_current())
 
     return term
@@ -94,7 +92,7 @@ def get(model: str, alias: str, language: str = None):
 def dispense(model: str, title: str, alias: str = None, language: str = None, parent: _Term = None) -> _Term:
     """Dispense a new term or raise exception if term with specified alias already exists
     """
-    if alias and find_by_alias(model, alias, language):
+    if alias and get(model, alias=alias, language=language):
         raise _error.TermExists(model, alias, language or _lang.get_current())
 
     term = _odm.dispense(model)  # type: _Term

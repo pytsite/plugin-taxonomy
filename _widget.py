@@ -71,7 +71,7 @@ class TokensInput(_widget.input.Tokens):
             if isinstance(v, _odm.model.Entity):
                 clean_value.append(v)
             elif isinstance(v, str) and v:
-                term = _api.find_by_title(self._model, v)
+                term = _api.get(self._model, v)
                 if not term:
                     term = _api.dispense(self._model, v).save()
                 clean_value.append(term)
