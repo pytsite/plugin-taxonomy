@@ -19,8 +19,8 @@ class Term(_odm_ui.model.UIEntity):
     def _setup_fields(self):
         """Hook
         """
-        self.define_field(_odm.field.String('title', required=True, strip_html=True))
-        self.define_field(_odm.field.String('alias', required=True, strip_html=True))
+        self.define_field(_odm.field.String('title', required=True))
+        self.define_field(_odm.field.String('alias', required=True))
         self.define_field(_odm.field.String('language', required=True, default=_lang.get_current()))
         self.define_field(_odm.field.Integer('weight'))
         self.define_field(_odm.field.Integer('order'))

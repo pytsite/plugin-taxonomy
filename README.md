@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 4.1 (2017-09-07)
+
+Support of `odm-3.7`.
+
+
 ### 4.0 (2017-08-29)
 
 - Removed API functions: `find_by_title()`, `find_by_alias()`.
