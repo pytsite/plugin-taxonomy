@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 4.2 (2017-09-17)
+
+New property `widget.Cloud.link_pattern_field`.
+
+
 ### 4.1 (2017-09-07)
 
 Support of `odm-3.7`.

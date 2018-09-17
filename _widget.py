@@ -110,6 +110,7 @@ class Cloud(_widget.Abstract):
         self._tpl = kwargs.get('tpl', 'taxonomy@widget/cloud')
         self._num = kwargs.get('num', 10)
         self._link_pattern = kwargs.get('link_pattern', '/{}/%s'.format(self._model))
+        self._link_pattern_field = kwargs.get('link_pattern_field', 'alias')
         self._term_title_pattern = kwargs.get('term_title_pattern', '%s')
         self._term_css = kwargs.get('term_css', 'label label-default')
         self._title_tag = kwargs.get('title_tag', 'h3')
@@ -127,6 +128,10 @@ class Cloud(_widget.Abstract):
     @property
     def link_pattern(self) -> str:
         return self._link_pattern
+
+    @property
+    def link_pattern_field(self) -> str:
+        return self._link_pattern_field
 
     @property
     def term_title_pattern(self) -> str:
