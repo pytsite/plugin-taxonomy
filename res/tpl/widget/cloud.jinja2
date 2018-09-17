@@ -5,7 +5,7 @@
 
     {% for term in widget.terms %}
         {% if widget.link_pattern %}
-            {% set path = widget.link_pattern | format(term.f_get(link_pattern_field)) %}
+            {% set path = widget.link_pattern | format(term.f_get(widget.link_pattern_field)) %}
             <a data-alias="{{ term.alias }}" data-path="{{ path }}" href="{{ url(path) }}"
                class="term {{ widget.term_css }}">{{ widget.term_title_pattern | format(term.title) }}</a>
         {% else %}

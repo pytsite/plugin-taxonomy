@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 4.2.1 (2017-09-17)
+
+Typo fixed.
+
+
 ### 4.2 (2017-09-17)
 
 New property `widget.Cloud.link_pattern_field`.
