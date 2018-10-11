@@ -1,6 +1,6 @@
 {
   "name": "taxonomy",
-  "version": "4.2.1",
+  "version": "5.0",
   "description": {
     "en": "Taxonomy",
     "ru": "Таксономия",
@@ -8,27 +8,26 @@
   },
   "url": "https://github.com/pytsite/plugin-taxonomy",
   "author": {
-    "name": "Alexander Shepetko",
+    "name": "Oleksandr Shepetko",
     "email": "a@shepetko.com",
     "url": "https://shepetko.com"
   },
   "requires": {
-    "pytsite": ">=7.32",
-    "plugins": [
-      "admin>=1.3",
-      "auth>=1.8",
-      "assetman",
-      "file",
-      "file_storage_odm",
-      "file_ui",
-      "font_awesome",
-      "form>=4.13",
-      "odm>=3.7",
-      "odm_auth>=1.9",
-      "odm_ui>=3.0",
-      "permissions",
-      "settings",
-      "widget>=2.11"
-    ]
+    "pytsite": ">=8",
+    "plugins": {
+      "admin": "2.x",
+      "auth": "3.x",
+      "assetman": "3.x",
+      "file": "1.x",
+      "file_storage_odm": "2.x",
+      "file_ui": "2.x",
+      "form": "5.x",
+      "odm": "5.x",
+      "odm_auth": "2.x",
+      "odm_ui": "4.x",
+      "permissions": "1.x",
+      "settings": "2.x",
+      "widget": "3.x"
+    }
   }
 }

@@ -115,7 +115,6 @@ class Cloud(_widget.Abstract):
         self._term_css = kwargs.get('term_css', 'label label-default')
         self._title_tag = kwargs.get('title_tag', 'h3')
         self._css += ' widget-taxonomy-cloud widget-taxonomy-cloud-{}'.format(self._model)
-        self._js_modules.append('taxonomy-widget-cloud')
 
     @property
     def model(self) -> str:

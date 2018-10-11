@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.0 (2017-10-11)
+
+Support of `pytsite-8.x`, `assetman-3.x`.
+
+
 ### 4.2.1 (2017-09-17)
 
 Typo fixed.
