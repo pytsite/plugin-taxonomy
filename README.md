@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.1 (2018-10-12)
+
+Support of `assetman-4.x`.
+
+
 ### 5.0 (2017-10-11)
 
 Support of `pytsite-8.x`, `assetman-3.x`.
