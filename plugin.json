@@ -1,6 +1,6 @@
 {
   "name": "taxonomy",
-  "version": "5.1",
+  "version": "5.2",
   "description": {
     "en": "Taxonomy",
     "ru": "Таксономия",
@@ -17,7 +17,7 @@
     "plugins": {
       "admin": "2.x",
       "auth": "3.x",
-      "assetman": "4.x",
+      "assetman": "5.x",
       "file": "1.x",
       "file_storage_odm": "2.x",
       "file_ui": "2.x",
@@ -27,7 +27,7 @@
       "odm_ui": "4.x",
       "permissions": "1.x",
       "settings": "2.x",
-      "widget": "3.x"
+      "widget": "4.x"
     }
   }
 }
