@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.3 (2018-11-08)
+
+`odm_ui_widget_select_search_entities()` implemented in `Term`.
+
+
 ### 5.2 (2018-10-22)
 
 Support of `assetman-5.x` and `widget-4.x`.
