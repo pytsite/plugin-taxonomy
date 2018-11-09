@@ -290,9 +290,12 @@ class Term(_odm_ui.model.UIEntity):
             f.sort([(sort_by, int(args.get('sort_order', _odm.I_ASC)))])
 
         for term in f.get(int(args.get('limit', 10))):
-            r.append({'id': term.ref, 'text': term.title})
+            r.append({'id': term.ref, 'text': term.odm_ui_widget_select_search_entities_title(args)})
 
         return r
+
+    def odm_ui_widget_select_search_entities_title(self, args: dict):
+        return self.title
 
     def as_jsonable(self) -> dict:
         r = super().as_jsonable()

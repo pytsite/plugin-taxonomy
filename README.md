@@ -4,9 +4,14 @@
 ## Changelog
 
 
+### 5.4 (2018-11-09)
+
+`Term.odm_ui_widget_select_search_entities_title()` implemented.
+
+
 ### 5.3 (2018-11-08)
 
-`odm_ui_widget_select_search_entities()` implemented in `Term`.
+`Term.odm_ui_widget_select_search_entities()` implemented.
 
 
 ### 5.2 (2018-10-22)
