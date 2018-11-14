@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.5.1 (2018-11-14)
+
+Outdated argument usage removed.
+
+
 ### 5.5 (2018-11-14)
 
 Support of `odm_ui-5.x`.

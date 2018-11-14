@@ -206,7 +206,6 @@ class Term(_odm_ui.model.UIEntity):
         frm.add_widget(_t_widget.TermSelect(
             uid='_parent',
             model=self.model,
-            caption_field='title',
             exclude=self if not self.is_new else None,
             exclude_descendants=True,
             label=self.t('parent'),
