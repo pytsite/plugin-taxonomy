@@ -4,7 +4,7 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from typing import Tuple as _Tuple, List as _List, Dict as _Dict
+from typing import Tuple as _Tuple
 from math import ceil as _ceil
 from pytsite import lang as _lang, events as _events
 from plugins import widget as _widget, odm as _odm, file_storage_odm as _file_storage_odm, odm_ui as _odm_ui, \
@@ -275,24 +275,12 @@ class Term(_odm_ui.model.UIEntity):
         return self.title
 
     @classmethod
-    def odm_ui_widget_select_search_entities(cls, args: dict) -> _List[_Dict[str, str]]:
-        from . import _api
+    def odm_ui_widget_select_search_entities(cls, f: _odm.Finder, args: dict):
+        f.eq('language', args.get('language', _lang.get_current()))
 
-        r = []
-        f = _api.find(args['model'])
-
-        search = args.get('q')
-        if search:
-            f.regex('title', '^{}'.format(search), True)
-
-        sort_by = args.get('sort_by')
-        if sort_by and f.mock.has_field(sort_by):
-            f.sort([(sort_by, int(args.get('sort_order', _odm.I_ASC)))])
-
-        for term in f.get(int(args.get('limit', 10))):
-            r.append({'id': term.ref, 'text': term.odm_ui_widget_select_search_entities_title(args)})
-
-        return r
+        query = args.get('q')
+        if query:
+            f.regex('title', '{}'.format(query), True)
 
     def odm_ui_widget_select_search_entities_title(self, args: dict):
         return self.title

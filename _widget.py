@@ -4,7 +4,7 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from pytsite import html as _html, router as _router, tpl as _tpl, lang as _lang
+from pytsite import html as _html, router as _router, tpl as _tpl
 from plugins import widget as _widget, odm as _odm, odm_ui as _odm_ui
 from . import _api
 
@@ -14,21 +14,9 @@ class TermSelect(_odm_ui.widget.EntitySelect):
     """
 
     def __init__(self, uid: str, **kwargs):
-        kwargs.setdefault('sort_field', 'order')
-        kwargs.setdefault('caption_field', 'title')
+        kwargs.setdefault('sort_by', 'order')
 
         super().__init__(uid, **kwargs)
-
-        self._language = kwargs.get('language', _lang.get_current())
-
-    def _get_finder(self):
-        return super()._get_finder().eq('language', self._language)
-
-
-class TermSelectSearch(_odm_ui.widget.EntitySelectSearch):
-    """Term Select With Search
-    """
-    pass
 
 
 class TokensInput(_widget.input.Tokens):
