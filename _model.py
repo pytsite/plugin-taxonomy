@@ -209,6 +209,7 @@ class Term(_odm_ui.model.UIEntity):
             exclude=self if not self.is_new else None,
             exclude_descendants=True,
             label=self.t('parent'),
+            append_none_item=not self.get_field('_parent').required,
             value=self.parent,
         ))
 

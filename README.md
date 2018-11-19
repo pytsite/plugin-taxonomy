@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.5.2 (2018-11-19)
+
+`Term`'s form widget fixed.
+
+
 ### 5.5.1 (2018-11-14)
 
 Outdated argument usage removed.
