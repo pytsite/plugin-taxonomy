@@ -298,7 +298,7 @@ class Term(_odm_ui.model.UIEntity):
             r['order'] = self.order
         if self.has_field('language'):
             r['language'] = self.language
-        if self.has_field('image'):
+        if self.has_field('image') and self.image:
             r['image'] = self.image.as_jsonable()
 
         return r

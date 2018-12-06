@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.5.3 (2018-12-06)
+
+`Term.as_jsonable()`'s error fixed.
+
+
 ### 5.5.2 (2018-11-19)
 
 `Term`'s form widget fixed.
