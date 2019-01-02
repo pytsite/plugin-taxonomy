@@ -4,6 +4,13 @@
 ## Changelog
 
 
+### 5.6 (2019-01-02)
+
+- `register_model()`'s `menu_title` arg made optional.
+- `model.Term`'s indexes and form setup fixed.
+- Support of `odm_ui-6.x`.
+
+
 ### 5.5.3 (2018-12-06)
 
 `Term.as_jsonable()`'s error fixed.

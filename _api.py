@@ -14,7 +14,7 @@ from ._model import Term as _Term
 _models = []
 
 
-def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_icon: str = 'fa fas fa-tags',
+def register_model(model: str, cls, menu_title: str = None, menu_weight: int = 0, menu_icon: str = 'fa fas fa-tags',
                    menu_sid: str = 'taxonomy', menu_roles: _Union[str, list, tuple] = ('admin', 'dev'),
                    menu_permissions: _Union[str, list, tuple] = None):
     """Register a taxonomy model
@@ -31,7 +31,7 @@ def register_model(model: str, cls, menu_title: str, menu_weight: int = 0, menu_
     _odm.register_model(model, cls)
     _models.append(model)
 
-    if _reg.get('env.type') == 'wsgi':
+    if _reg.get('env.type') == 'wsgi' and menu_title:
         menu_url = _router.rule_path('odm_ui@admin_browse', {'model': model})
         _admin.sidebar.add_menu(
             menu_sid, model, menu_title, menu_url, menu_icon,

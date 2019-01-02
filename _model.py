@@ -29,7 +29,14 @@ class Term(_odm_ui.model.UIEntity):
     def _setup_indexes(self):
         """Hook
         """
-        self.define_index([('alias', _odm.I_ASC), ('language', _odm.I_ASC)], unique=True)
+        if self.has_field('title'):
+            self.define_index([('title', _odm.I_TEXT)])
+
+        if self.has_field('alias'):
+            if self.has_field('language'):
+                self.define_index([('alias', _odm.I_ASC), ('language', _odm.I_ASC)], unique=True)
+            else:
+                self.define_index([('alias', _odm.I_ASC)], unique=True)
 
         if self.has_field('weight'):
             if self.has_field('language'):
@@ -39,7 +46,7 @@ class Term(_odm_ui.model.UIEntity):
 
         if self.has_field('order'):
             if self.has_field('language'):
-                self.define_index([('language', _odm.I_ASC), ('order', _odm.I_DESC)])
+                self.define_index([('language', _odm.I_ASC), ('order', _odm.I_ASC)])
             else:
                 self.define_index([('order', _odm.I_ASC)])
 
@@ -170,9 +177,6 @@ class Term(_odm_ui.model.UIEntity):
         if browser.mock.has_field('weight'):
             data_fields.append(('weight', 'taxonomy@weight'))
 
-        if browser.mock.has_field('order'):
-            data_fields.append(('order', 'taxonomy@order'))
-
         browser.data_fields = data_fields
         browser.default_sort_order = _odm.I_ASC
         browser.finder_adjust = lambda finder: finder.eq('language', _lang.get_current())
@@ -193,9 +197,6 @@ class Term(_odm_ui.model.UIEntity):
 
         if self.has_field('weight'):
             r['weight'] = self.weight
-
-        if self.has_field('order'):
-            r['order'] = self.order
 
         return r
 
@@ -237,16 +238,6 @@ class Term(_odm_ui.model.UIEntity):
                 label=_lang.t('taxonomy@weight'),
                 value=self.weight,
                 h_size='col-sm-3 col-md-2 col-lg-1'
-            ))
-
-        # Order
-        if self.has_field('order'):
-            frm.add_widget(_widget.input.Integer(
-                uid='order',
-                label=_lang.t('taxonomy@order'),
-                value=self.order,
-                h_size='col-sm-3 col-md-2 col-lg-1',
-                allow_minus=True
             ))
 
         # Image
