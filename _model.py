@@ -265,8 +265,7 @@ class Term(_odm_ui.model.UIEntity):
         """
         return self.title
 
-    @classmethod
-    def odm_ui_widget_select_search_entities(cls, f: _odm.Finder, args: dict):
+    def odm_ui_widget_select_search_entities(self, f: _odm.MultiModelFinder, args: dict):
         f.eq('language', args.get('language', _lang.get_current()))
 
         query = args.get('q')

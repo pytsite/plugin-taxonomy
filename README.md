@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.7 (2019-01-07)
+
+Support of `odm-5.7` and `odm_auth-3.0`.
+
+
 ### 5.6 (2019-01-02)
 
 - `register_model()`'s `menu_title` arg made optional.
