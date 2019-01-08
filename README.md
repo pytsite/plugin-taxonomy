@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.7.1 (2019-01-08)
+
+`widget.TermSelect.minimum_input_length`'s default value set to `1`.
+
+
 ### 5.7 (2019-01-07)
 
 Support of `odm-5.7` and `odm_auth-3.0`.

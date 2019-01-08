@@ -14,6 +14,7 @@ class TermSelect(_odm_ui.widget.EntitySelect):
     """
 
     def __init__(self, uid: str, **kwargs):
+        kwargs.setdefault('minimum_input_length', 1)
         kwargs.setdefault('sort_by', 'order')
 
         super().__init__(uid, **kwargs)
