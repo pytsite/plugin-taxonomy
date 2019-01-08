@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.8 (2019-01-08)
+
+Support of `odm_ui-7.x`.
+
+
 ### 5.7.1 (2019-01-08)
 
 `widget.TermSelect.minimum_input_length`'s default value set to `1`.

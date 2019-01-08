@@ -6,7 +6,7 @@ __license__ = 'MIT'
 
 from typing import Tuple as _Tuple
 from math import ceil as _ceil
-from pytsite import lang as _lang, events as _events
+from pytsite import lang as _lang, events as _events, routing as _routing
 from plugins import widget as _widget, odm as _odm, file_storage_odm as _file_storage_odm, odm_ui as _odm_ui, \
     file as _file, form as _form, file_ui as _file_ui
 from . import _widget as _t_widget
@@ -165,8 +165,7 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('image') and self.image:
             self.image.delete()
 
-    @classmethod
-    def odm_ui_browser_setup(cls, browser: _odm_ui.Browser):
+    def odm_ui_browser_setup(self, browser: _odm_ui.Browser):
         """Hook
         """
         data_fields = [
@@ -174,18 +173,23 @@ class Term(_odm_ui.model.UIEntity):
             ('alias', 'taxonomy@alias'),
         ]
 
-        if browser.mock.has_field('weight'):
+        if self.has_field('weight'):
             data_fields.append(('weight', 'taxonomy@weight'))
 
         browser.data_fields = data_fields
         browser.default_sort_order = _odm.I_ASC
-        browser.finder_adjust = lambda finder: finder.eq('language', _lang.get_current())
-        if browser.mock.has_field('order'):
+
+        if self.has_field('order'):
             browser.default_sort_field = 'order'
-        elif browser.mock.has_field('weight'):
+        elif self.has_field('weight'):
             browser.default_sort_field = 'weight'
         else:
             browser.default_sort_field = 'title'
+
+    def odm_ui_browser_setup_finder(self, finder: _odm.SingleModelFinder, args: _routing.ControllerArgs):
+        super().odm_ui_browser_setup_finder(finder, args)
+
+        finder.eq('language', _lang.get_current())
 
     def odm_ui_browser_row(self) -> dict:
         """Hook
