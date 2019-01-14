@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.8.1 (2019-01-14)
+
+`alias` field existence check fixed.
+
+
 ### 5.8 (2019-01-08)
 
 Support of `odm_ui-7.x`.

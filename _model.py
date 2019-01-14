@@ -131,7 +131,7 @@ class Term(_odm_ui.model.UIEntity):
         elif field_name == 'language':
             # Check if language code is correct
             if value not in _lang.langs():
-                raise ValueError("Language '{}' is not supported.".format(value))
+                raise ValueError("Language '{}' is not supported".format(value))
 
         return super()._on_f_set(field_name, value, **kwargs)
 
@@ -140,8 +140,7 @@ class Term(_odm_ui.model.UIEntity):
         """
         super()._pre_save(**kwargs)
 
-        # Alias is mandatory
-        if not self.f_get('alias'):
+        if self.has_field('alias') and not self.alias:
             self.f_set('alias', self.f_get('title'))
 
         if self.is_new and self.has_field('order') and not self.order:
@@ -170,8 +169,10 @@ class Term(_odm_ui.model.UIEntity):
         """
         data_fields = [
             ('title', 'taxonomy@title'),
-            ('alias', 'taxonomy@alias'),
         ]
+
+        if self.has_field('alias'):
+            data_fields.append(('alias', 'taxonomy@alias'))
 
         if self.has_field('weight'):
             data_fields.append(('weight', 'taxonomy@weight'))
@@ -196,8 +197,10 @@ class Term(_odm_ui.model.UIEntity):
         """
         r = {
             'title': self.title,
-            'alias': self.alias,
         }
+
+        if self.has_field('alias'):
+            r['alias'] = self.alias
 
         if self.has_field('weight'):
             r['weight'] = self.weight
