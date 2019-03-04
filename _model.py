@@ -19,9 +19,9 @@ class Term(_odm_ui.model.UIEntity):
     def _setup_fields(self):
         """Hook
         """
-        self.define_field(_odm.field.String('title', required=True))
-        self.define_field(_odm.field.String('alias', required=True))
-        self.define_field(_odm.field.String('language', required=True, default=_lang.get_current()))
+        self.define_field(_odm.field.String('title', is_required=True))
+        self.define_field(_odm.field.String('alias', is_required=True))
+        self.define_field(_odm.field.String('language', is_required=True, default=_lang.get_current()))
         self.define_field(_odm.field.Integer('weight'))
         self.define_field(_odm.field.Integer('order'))
         self.define_field(_file_storage_odm.field.Image('image'))
@@ -135,10 +135,10 @@ class Term(_odm_ui.model.UIEntity):
 
         return super()._on_f_set(field_name, value, **kwargs)
 
-    def _pre_save(self, **kwargs):
+    def _on_pre_save(self, **kwargs):
         """Hook
         """
-        super()._pre_save(**kwargs)
+        super()._on_pre_save(**kwargs)
 
         if self.has_field('alias') and not self.alias:
             self.f_set('alias', self.f_get('title'))
@@ -150,14 +150,14 @@ class Term(_odm_ui.model.UIEntity):
 
         _events.fire('taxonomy@term.pre_save', term=self)
 
-    def _pre_delete(self, **kwargs):
+    def _on_pre_delete(self, **kwargs):
         """Hook
         """
-        super()._pre_delete(**kwargs)
+        super()._on_pre_delete(**kwargs)
 
         _events.fire('taxonomy@term.pre_delete', term=self)
 
-    def _after_delete(self, **kwargs):
+    def _on_after_delete(self, **kwargs):
         """Hook
         """
         # Delete attached image
@@ -217,7 +217,7 @@ class Term(_odm_ui.model.UIEntity):
             exclude=self if not self.is_new else None,
             exclude_descendants=True,
             label=self.t('parent'),
-            append_none_item=not self.get_field('_parent').required,
+            append_none_item=not self.get_field('_parent').is_required,
             value=self.parent,
         ))
 
@@ -227,7 +227,7 @@ class Term(_odm_ui.model.UIEntity):
                 uid='title',
                 label=_lang.t('taxonomy@title'),
                 value=self.title,
-                required=self.get_field('title').required,
+                required=self.get_field('title').is_required,
             ))
 
         # Alias
@@ -252,7 +252,7 @@ class Term(_odm_ui.model.UIEntity):
             frm.add_widget(_file_ui.widget.ImagesUpload(
                 uid='image',
                 label=_lang.t('taxonomy@image'),
-                required=self.get_field('image').required,
+                required=self.get_field('image').is_required,
                 value=self.image,
             ))
 

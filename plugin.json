@@ -1,6 +1,6 @@
 {
   "name": "taxonomy",
-  "version": "5.8.1",
+  "version": "5.9",
   "description": {
     "en": "Taxonomy",
     "ru": "Таксономия",
@@ -13,21 +13,21 @@
     "url": "https://shepetko.com"
   },
   "requires": {
-    "pytsite": ">=8",
+    "pytsite": ">=8.9",
     "plugins": {
-      "admin": "2.x",
-      "auth": "3.x",
-      "assetman": "5.x",
-      "file": "1.x",
-      "file_storage_odm": "2.x",
-      "file_ui": "2.x",
-      "form": "5.x",
-      "odm": "5.x",
-      "odm_auth": "3.x",
-      "odm_ui": "7.x",
-      "permissions": "1.x",
-      "settings": "2.x",
-      "widget": "4.x"
+      "admin": "^2.0",
+      "auth": "^3.0",
+      "assetman": "^5.0",
+      "file": "^1.0",
+      "file_storage_odm": "^2.0",
+      "file_ui": "^2.0",
+      "form": "^5.0",
+      "odm": "^6.0",
+      "odm_auth": "^3.0",
+      "odm_ui": "^7.0",
+      "permissions": "^1.0",
+      "settings": "^2.0",
+      "widget": "^4.0"
     }
   }
 }

@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 5.9 (2019-03-04)
+
+Support of `odm-6.0`.
+
+
 ### 5.8.1 (2019-01-14)
 
 `alias` field existence check fixed.
