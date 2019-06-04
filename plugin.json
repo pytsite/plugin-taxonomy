@@ -1,6 +1,6 @@
 {
   "name": "taxonomy",
-  "version": "5.9",
+  "version": "5.10",
   "description": {
     "en": "Taxonomy",
     "ru": "Таксономия",
@@ -23,7 +23,7 @@
       "file_ui": "^2.0",
       "form": "^5.0",
       "odm": "^6.0",
-      "odm_auth": "^3.0",
+      "odm_auth": "^4.0",
       "odm_ui": "^7.0",
       "permissions": "^1.0",
       "settings": "^2.0",

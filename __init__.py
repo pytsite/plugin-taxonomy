@@ -5,7 +5,7 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 # Public API
-from . import _api, _model as model, _widget as widget
+from . import _model as model, _widget as widget
 from . import _error as error
 from ._api import register_model, is_model_registered, find, dispense, get
 from ._model import Term

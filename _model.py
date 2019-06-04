@@ -4,59 +4,57 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from typing import Tuple as _Tuple
-from math import ceil as _ceil
-from pytsite import lang as _lang, events as _events, routing as _routing
-from plugins import widget as _widget, odm as _odm, file_storage_odm as _file_storage_odm, odm_ui as _odm_ui, \
-    file as _file, form as _form, file_ui as _file_ui
-from . import _widget as _t_widget
+from typing import List
+from math import ceil
+from pytsite import lang, events, routing
+from plugins import widget, odm, file_storage_odm, odm_ui, file, form, file_ui
+from plugins.odm_auth import PERM_CREATE, PERM_MODIFY, PERM_DELETE
 
 
-class Term(_odm_ui.model.UIEntity):
+class Term(odm_ui.model.UIEntity):
     """Taxonomy Term Model
     """
 
     def _setup_fields(self):
         """Hook
         """
-        self.define_field(_odm.field.String('title', is_required=True))
-        self.define_field(_odm.field.String('alias', is_required=True))
-        self.define_field(_odm.field.String('language', is_required=True, default=_lang.get_current()))
-        self.define_field(_odm.field.Integer('weight'))
-        self.define_field(_odm.field.Integer('order'))
-        self.define_field(_file_storage_odm.field.Image('image'))
+        self.define_field(odm.field.String('title', is_required=True))
+        self.define_field(odm.field.String('alias', is_required=True))
+        self.define_field(odm.field.String('language', is_required=True, default=lang.get_current()))
+        self.define_field(odm.field.Integer('weight'))
+        self.define_field(odm.field.Integer('order'))
+        self.define_field(file_storage_odm.field.Image('image'))
 
     def _setup_indexes(self):
         """Hook
         """
         if self.has_field('title'):
-            self.define_index([('title', _odm.I_TEXT)])
+            self.define_index([('title', odm.I_TEXT)])
 
         if self.has_field('alias'):
             if self.has_field('language'):
-                self.define_index([('alias', _odm.I_ASC), ('language', _odm.I_ASC)], unique=True)
+                self.define_index([('alias', odm.I_ASC), ('language', odm.I_ASC)], unique=True)
             else:
-                self.define_index([('alias', _odm.I_ASC)], unique=True)
+                self.define_index([('alias', odm.I_ASC)], unique=True)
 
         if self.has_field('weight'):
             if self.has_field('language'):
-                self.define_index([('language', _odm.I_ASC), ('weight', _odm.I_DESC)])
+                self.define_index([('language', odm.I_ASC), ('weight', odm.I_DESC)])
             else:
-                self.define_index([('weight', _odm.I_DESC)])
+                self.define_index([('weight', odm.I_DESC)])
 
         if self.has_field('order'):
             if self.has_field('language'):
-                self.define_index([('language', _odm.I_ASC), ('order', _odm.I_ASC)])
+                self.define_index([('language', odm.I_ASC), ('order', odm.I_ASC)])
             else:
-                self.define_index([('order', _odm.I_ASC)])
+                self.define_index([('order', odm.I_ASC)])
 
     @classmethod
     def odm_auth_permissions_group(cls) -> str:
         return 'taxonomy'
 
-    @classmethod
-    def odm_auth_permissions(cls) -> _Tuple[str, ...]:
-        return 'create', 'modify', 'delete'
+    def odm_auth_permissions(self) -> List[str]:
+        return [PERM_CREATE, PERM_MODIFY, PERM_DELETE]
 
     @property
     def title(self) -> str:
@@ -99,11 +97,11 @@ class Term(_odm_ui.model.UIEntity):
         self.f_set('order', value)
 
     @property
-    def image(self) -> _file.model.AbstractImage:
+    def image(self) -> file.model.AbstractImage:
         return self.f_get('image')
 
     @image.setter
-    def image(self, value: _file.model.AbstractImage):
+    def image(self, value: file.model.AbstractImage):
         self.f_set('image', value)
 
     def _on_f_set(self, field_name: str, value, **kwargs):
@@ -130,7 +128,7 @@ class Term(_odm_ui.model.UIEntity):
 
         elif field_name == 'language':
             # Check if language code is correct
-            if value not in _lang.langs():
+            if value not in lang.langs():
                 raise ValueError("Language '{}' is not supported".format(value))
 
         return super()._on_f_set(field_name, value, **kwargs)
@@ -145,17 +143,17 @@ class Term(_odm_ui.model.UIEntity):
 
         if self.is_new and self.has_field('order') and not self.order:
             from . import _api
-            e = _api.find(self.model).eq('_parent', self.parent).sort([('order', _odm.I_DESC)]).first()
-            self.order = ((int(_ceil(e.order / 10.0)) * 10) + 10) if e else 10
+            e = _api.find(self.model).eq('_parent', self.parent).sort([('order', odm.I_DESC)]).first()
+            self.order = ((int(ceil(e.order / 10.0)) * 10) + 10) if e else 10
 
-        _events.fire('taxonomy@term.pre_save', term=self)
+        events.fire('taxonomy@term.pre_save', term=self)
 
     def _on_pre_delete(self, **kwargs):
         """Hook
         """
         super()._on_pre_delete(**kwargs)
 
-        _events.fire('taxonomy@term.pre_delete', term=self)
+        events.fire('taxonomy@term.pre_delete', term=self)
 
     def _on_after_delete(self, **kwargs):
         """Hook
@@ -164,7 +162,7 @@ class Term(_odm_ui.model.UIEntity):
         if self.has_field('image') and self.image:
             self.image.delete()
 
-    def odm_ui_browser_setup(self, browser: _odm_ui.Browser):
+    def odm_ui_browser_setup(self, browser: odm_ui.Browser):
         """Hook
         """
         data_fields = [
@@ -178,7 +176,7 @@ class Term(_odm_ui.model.UIEntity):
             data_fields.append(('weight', 'taxonomy@weight'))
 
         browser.data_fields = data_fields
-        browser.default_sort_order = _odm.I_ASC
+        browser.default_sort_order = odm.I_ASC
 
         if self.has_field('order'):
             browser.default_sort_field = 'order'
@@ -187,10 +185,10 @@ class Term(_odm_ui.model.UIEntity):
         else:
             browser.default_sort_field = 'title'
 
-    def odm_ui_browser_setup_finder(self, finder: _odm.SingleModelFinder, args: _routing.ControllerArgs):
+    def odm_ui_browser_setup_finder(self, finder: odm.SingleModelFinder, args: routing.ControllerArgs):
         super().odm_ui_browser_setup_finder(finder, args)
 
-        finder.eq('language', _lang.get_current())
+        finder.eq('language', lang.get_current())
 
     def odm_ui_browser_row(self) -> dict:
         """Hook
@@ -207,11 +205,12 @@ class Term(_odm_ui.model.UIEntity):
 
         return r
 
-    def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
+    def odm_ui_m_form_setup_widgets(self, frm: form.Form):
         """Hook
         """
         # Parent
-        frm.add_widget(_t_widget.TermSelect(
+        from ._widget import TermSelect
+        frm.add_widget(TermSelect(
             uid='_parent',
             model=self.model,
             exclude=self if not self.is_new else None,
@@ -223,48 +222,48 @@ class Term(_odm_ui.model.UIEntity):
 
         # Title
         if self.has_field('title'):
-            frm.add_widget(_widget.input.Text(
+            frm.add_widget(widget.input.Text(
                 uid='title',
-                label=_lang.t('taxonomy@title'),
+                label=lang.t('taxonomy@title'),
                 value=self.title,
                 required=self.get_field('title').is_required,
             ))
 
         # Alias
         if self.has_field('alias'):
-            frm.add_widget(_widget.input.Text(
+            frm.add_widget(widget.input.Text(
                 uid='alias',
-                label=_lang.t('taxonomy@alias'),
+                label=lang.t('taxonomy@alias'),
                 value=self.f_get('alias'),
             ))
 
         # Weight
         if self.has_field('weight'):
-            frm.add_widget(_widget.input.Integer(
+            frm.add_widget(widget.input.Integer(
                 uid='weight',
-                label=_lang.t('taxonomy@weight'),
+                label=lang.t('taxonomy@weight'),
                 value=self.weight,
                 h_size='col-sm-3 col-md-2 col-lg-1'
             ))
 
         # Image
         if self.has_field('image'):
-            frm.add_widget(_file_ui.widget.ImagesUpload(
+            frm.add_widget(file_ui.widget.ImagesUpload(
                 uid='image',
-                label=_lang.t('taxonomy@image'),
+                label=lang.t('taxonomy@image'),
                 required=self.get_field('image').is_required,
                 value=self.image,
             ))
 
         # Language
         if self.has_field('language'):
-            lng = _lang.get_current() if self.is_new else self.language
-            frm.add_widget(_widget.static.Text(
+            lng = lang.get_current() if self.is_new else self.language
+            frm.add_widget(widget.static.Text(
                 uid='language',
-                label=_lang.t('taxonomy@language'),
-                text=_lang.lang_title(lng),
+                label=lang.t('taxonomy@language'),
+                text=lang.lang_title(lng),
                 value=lng,
-                hidden=len(_lang.langs()) == 1,
+                hidden=len(lang.langs()) == 1,
             ))
 
     def odm_ui_mass_action_entity_description(self) -> str:
@@ -272,8 +271,8 @@ class Term(_odm_ui.model.UIEntity):
         """
         return self.title
 
-    def odm_ui_widget_select_search_entities(self, f: _odm.MultiModelFinder, args: dict):
-        f.eq('language', args.get('language', _lang.get_current()))
+    def odm_ui_widget_select_search_entities(self, f: odm.MultiModelFinder, args: dict):
+        f.eq('language', args.get('language', lang.get_current()))
 
         query = args.get('q')
         if query:

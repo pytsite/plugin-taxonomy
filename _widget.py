@@ -4,12 +4,12 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from pytsite import html as _html, router as _router, tpl as _tpl
-from plugins import widget as _widget, odm as _odm, odm_ui as _odm_ui
+from pytsite import html, router, tpl
+from plugins import widget, odm, odm_ui
 from . import _api
 
 
-class TermSelect(_odm_ui.widget.EntitySelect):
+class TermSelect(odm_ui.widget.EntitySelect):
     """Term Select
     """
 
@@ -20,7 +20,7 @@ class TermSelect(_odm_ui.widget.EntitySelect):
         super().__init__(uid, **kwargs)
 
 
-class TokensInput(_widget.input.Tokens):
+class TokensInput(widget.input.Tokens):
     """Term Tokens Input Widget
     """
 
@@ -36,7 +36,7 @@ class TokensInput(_widget.input.Tokens):
         if not self._model:
             raise ValueError('Model is not specified')
 
-        self._remote_source = _router.rule_url('taxonomy@search_terms', {
+        self._remote_source = router.rule_url('taxonomy@search_terms', {
             'model': self._model,
             'query': '__QUERY'
         })
@@ -57,7 +57,7 @@ class TokensInput(_widget.input.Tokens):
 
         clean_value = []
         for v in value:
-            if isinstance(v, _odm.model.Entity):
+            if isinstance(v, odm.model.Entity):
                 clean_value.append(v)
             elif isinstance(v, str) and v:
                 term = _api.get(self._model, v)
@@ -67,10 +67,10 @@ class TokensInput(_widget.input.Tokens):
 
         super().set_val(clean_value)
 
-    def _get_element(self, **kwargs) -> _html.Element:
+    def _get_element(self, **kwargs) -> html.Element:
         """Render the widget
         """
-        html_input = _html.Input(
+        html_input = html.Input(
             type='text',
             uid=self._uid,
             name=self._name,
@@ -81,7 +81,7 @@ class TokensInput(_widget.input.Tokens):
         return html_input
 
 
-class Cloud(_widget.Abstract):
+class Cloud(widget.Abstract):
     """Terms Cloud Widget
     """
 
@@ -137,8 +137,8 @@ class Cloud(_widget.Abstract):
     def terms(self) -> list:
         return list(_api.find(self._model).get(self._num))
 
-    def _get_element(self, **kwargs) -> _html.Element:
+    def _get_element(self, **kwargs) -> html.Element:
         """Render the widget.
         :param **kwargs:
         """
-        return _html.TagLessElement(_tpl.render(self._tpl, {'widget': self}))
+        return html.TagLessElement(tpl.render(self._tpl, {'widget': self}))

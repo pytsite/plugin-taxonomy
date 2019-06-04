@@ -4,15 +4,15 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from pytsite import router as _router, routing as _routing, http as _http
+from pytsite import router, routing, http
 from . import _api
 
 
-class SearchTerms(_routing.Controller):
+class SearchTerms(routing.Controller):
     def exec(self):
         """Search taxonomy term titles
         """
-        exclude = _router.request().inp.get('exclude', [])
+        exclude = router.request().inp.get('exclude', [])
 
         if isinstance(exclude, str):
             exclude = [exclude]
@@ -25,4 +25,4 @@ class SearchTerms(_routing.Controller):
         for word in self.arg('query').split(' '):
             f.regex('title', word.strip(), True)
 
-        return _http.JSONResponse([e.f_get('title') for e in f.get(10)])
+        return http.JSONResponse([e.f_get('title') for e in f.get(10)])
