@@ -10,7 +10,8 @@ from . import _error as error
 from ._api import register_model, is_model_registered, find, dispense, get
 from ._model import Term
 
-from pytsite import semver as _semver
+# Locally needed imports
+from semaver import Version as _Version
 
 
 def plugin_load():
@@ -32,7 +33,7 @@ def plugin_load_wsgi():
     admin.sidebar.add_section('taxonomy', 'taxonomy@taxonomy', 0, 'title')
 
 
-def plugin_update(v_from: _semver.Version):
+def plugin_update(v_from: _Version):
     if v_from < '2.7':
         from plugins import odm
 

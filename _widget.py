@@ -4,7 +4,8 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from pytsite import html, router, tpl
+import htmler
+from pytsite import router, tpl
 from plugins import widget, odm, odm_ui
 from . import _api
 
@@ -67,12 +68,12 @@ class TokensInput(widget.input.Tokens):
 
         super().set_val(clean_value)
 
-    def _get_element(self, **kwargs) -> html.Element:
+    def _get_element(self, **kwargs) -> htmler.Element:
         """Render the widget
         """
-        html_input = html.Input(
+        html_input = htmler.Input(
             type='text',
-            uid=self._uid,
+            id=self._uid,
             name=self._name,
             value=','.join([v.f_get('title') for v in self.get_val()]),
             css=' '.join(('form-control', self._css)),
@@ -137,8 +138,8 @@ class Cloud(widget.Abstract):
     def terms(self) -> list:
         return list(_api.find(self._model).get(self._num))
 
-    def _get_element(self, **kwargs) -> html.Element:
+    def _get_element(self, **kwargs) -> htmler.Element:
         """Render the widget.
         :param **kwargs:
         """
-        return html.TagLessElement(tpl.render(self._tpl, {'widget': self}))
+        return htmler.TagLessElement(tpl.render(self._tpl, {'widget': self}))
